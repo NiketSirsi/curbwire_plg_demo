@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .cw-font-serif { font-family: var(--font-playfair), 'Playfair Display', Georgia, serif; }
+  .cw-font-body  { font-family: var(--font-spectral), 'Spectral', Georgia, serif; }
+  .cw-font-mono  { font-family: var(--font-jetbrains), 'JetBrains Mono', Menlo, monospace; }
+}

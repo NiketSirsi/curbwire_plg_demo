@@ -1,0 +1,950 @@
+Delivered-To: nsirsi@gmail.com
+Received: by 2002:a05:6359:22a:b0:2c6:da94:2c75 with SMTP id ej42csp1209330rwb;
+        Tue, 10 Nov 2026 07:31:32 -0800 (PST)
+X-Received: by 2002:a05:690c:388:b0:8b0:e6ed:ae52 with SMTP id 00721157ae682-8b392acfa78mr13528487b3.47.1794324691711;
+        Tue, 10 Nov 2026 07:31:31 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794324691; cv=none;
+        d=google.com; s=arc-20260327;
+        b=pWjRPHOOMGozwtpd4IxUpiX06QPmotWSuT1bKoBLtAugx3OtIzoy66pO0aCOmc1Dsu
+         T1zR+vmFqkWLj/+nWU01Qq+LfkuDQtP5npD1AOEMCTa+LBLnXyBOp+8lr/ENpt1MqnMF
+         YXRUSuRxTzR45tqNPuj6pB7tZ+h6qjpbvuilqTG4kwPUz+48VYlpCI9Elcw4wNtmqkqh
+         kGSX5Tbk3c/RB5h1N3WZuqu/lEBnBILYktP55j8IRxLRQZ1EJCNqm9rYCxQCpNYRA2Vi
+         u+74nXNpvFtWhtLzINgbYYAwXvHnuHH24ASMt1RlRFqZPU7c0LGSmKw5ikofGCKZvk2l
+         P/lw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=feedback-id:mime-version:date:message-id:subject:reply-to:to:from
+         :list-unsubscribe-post:list-unsubscribe:dkim-signature
+         :dkim-signature;
+        bh=0qdmAXhS/gof4otz0kf58GIc65IDVaUCoyucEz6oqVs=;
+        fh=fjxXBxriGeBPmqvaaQRajxtvRkGMwf4/4Ya+AaP1EBs=;
+        b=bThEjl4KL8w3oi8SHJHzyMontMI+a617FTHS05TCPq+p4i8BswSYxhYhBGwM0cVDbj
+         LVafY54o1zgdM7yfOxBVvDiiZryKDHXSCvG/KEg7gj7qbV+pTnikE2N4drU/HDkjLGFw
+         O1Ef7dMyb4mW8g8IMDIrlEIxJKVcmOcpGXGNCwrPoZEwft+Rr1lWWAA0MPhHhdrbB83q
+         pk4uhaOLEs5madqyuEl95t8fTk49o4HTrHstWvb7cnQF5fuYxp15dRoInKq6GzVwt0U9
+         ++teuBAUGVtus43DLk77jRd1NNvMViGX+fY3SymAeUIreLsaqgnJsQGQCxVTLD87oITg
+         E8MQ==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@send.curbwire.com header.s=resend header.b=j64uXlA0;
+       dkim=pass header.i=@amazonses.com header.s=224i4yxa5dv7c2xz3womw6peuasteono header.b=QKrG8DrW;
+       spf=pass (google.com: domain of 010001a1c615f863-6a7b0be5-8e66-4b90-8309-feb991804c11-000000@send.send.curbwire.com designates 54.240.9.20 as permitted sender) smtp.mailfrom=010001a1c615f863-6a7b0be5-8e66-4b90-8309-feb991804c11-000000@send.send.curbwire.com;
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=send.curbwire.com
+Return-Path: <010001a1c615f863-6a7b0be5-8e66-4b90-8309-feb991804c11-000000@send.send.curbwire.com>
+Received: from a9-20.smtp-out.amazonses.com (a9-20.smtp-out.amazonses.com. [54.240.9.20])
+        by mx.google.com with ESMTPS id 6a1803df08f44-91ef095b83esi34017006d6.622.2026.11.10.07.31.31
+        for <nsirsi@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 10 Nov 2026 07:31:31 -0800 (PST)
+Received-SPF: pass (google.com: domain of 010001a1c615f863-6a7b0be5-8e66-4b90-8309-feb991804c11-000000@send.send.curbwire.com designates 54.240.9.20 as permitted sender) client-ip=54.240.9.20;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@send.curbwire.com header.s=resend header.b=j64uXlA0;
+       dkim=pass header.i=@amazonses.com header.s=224i4yxa5dv7c2xz3womw6peuasteono header.b=QKrG8DrW;
+       spf=pass (google.com: domain of 010001a1c615f863-6a7b0be5-8e66-4b90-8309-feb991804c11-000000@send.send.curbwire.com designates 54.240.9.20 as permitted sender) smtp.mailfrom=010001a1c615f863-6a7b0be5-8e66-4b90-8309-feb991804c11-000000@send.send.curbwire.com;
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=send.curbwire.com
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple; s=resend;
+	d=send.curbwire.com; t=1794324691;
+	h=List-Unsubscribe:List-Unsubscribe-Post:From:To:Reply-To:Subject:Message-ID:Date:MIME-Version:Content-Type;
+	bh=MZ386t0/PvHNHGiIsC/hhjuKl2sHlxk/3txupenZoDs=;
+	b=j64uXlA0xcTIgASbBE28rIrZ3RoHTwSkrKAUVKVMfDsdyM+JhE5muF0uErWZMAql
+	i2pCALWrVkl1/1fhbrX9wyAtbAFw2NX/x6Vvfx98sOe+GKQbgLFcSMQEv1kVbqge9lg
+	sOIEiSie6hC8I6b9rTu4CROvesNOMK+2409bX84Y=
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=224i4yxa5dv7c2xz3womw6peuasteono; d=amazonses.com; t=1794324691;
+	h=List-Unsubscribe:List-Unsubscribe-Post:From:To:Reply-To:Subject:Message-ID:Date:MIME-Version:Content-Type:Feedback-ID;
+	bh=MZ386t0/PvHNHGiIsC/hhjuKl2sHlxk/3txupenZoDs=;
+	b=QKrG8DrWhFMlr8aNX524aa9a4gRScy1RA1ZUtMaAtjyOjGM3i1x1LAf1NYdwcjFo
+	HzZ3pVTQjh/d1zFCcFBcEoKRj+TBZI7QH4dfWNHYE69ymejW0VAFc1IQqgZ/+koFMMo
+	xJk1ZtoU3UKjkQ+dPoUe7UPDo26t++AqYnLesA1c=
+List-Unsubscribe:
+ <https://curbwire.com/api/unsubscribe?t=eyJzdWIiOiIwYmMxZGU3ZC04YTBjLTRmNjctYjQ5MC05ZWYxOWY4YjU4MWUiLCJraW5kIjoidW5zdWIifQ.fac437debed4c49be44b51fd0aed7a0ecbb86b4ffa52ecb38fa36bf47a297833>
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+From: Curbwire <hello@send.curbwire.com>
+To: nsirsi@gmail.com
+Reply-To: people@curbwire.com
+Subject: =?UTF-8?Q?Cupertino_=C2=B7_Tue=2C_Nov_10?=
+Message-ID: <010001a1c615f863-6a7b0be5-8e66-4b90-8309-feb991804c11-000000@email.amazonses.com>
+Date: Tue, 10 Nov 2026 15:31:31 +0000
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="--_NmP-58ff7c030b133459-Part_1"
+Feedback-ID: :1.us-east-1.CeRW6b8Mw1HiCP7zgrytfznTaEygo2Ws2zWYErAv+gPvM2NbweyHEVsyCBSHaKbDyxKqBufTkB89xPH/0WXt2WWB/YCuhzjPJYA/+zRF2AxWhBZgFwLiwyzLDlI0V7pTGQ30y2tYcKPaOkrB5Pr1A0oho1tw++R2myfx0OPeJX8=:1.us-east-1.epbACCJLarUaEI78XZoGREJ9LamRjxMH5pM2kZb64rA=:AmazonSES
+X-SES-Outgoing: 2026.11.10-54.240.9.20
+
+----_NmP-58ff7c030b133459-Part_1
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+Hi, 95014.
+
+
+
+
+
+
+      Read Online
+Curbwire N&ordm;6
+Tue, Nov 10
+
+
+
+
+
+Like Curbwire?  Send To A Friend &rarr;
+
+
+WEATHER  Warm and dry.
+TUE &#9728;&#65039; 53=C2=B0 =E2=94=80=E2=94=80=E2=94=81=E2=94=81=
+=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=
+=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=80=E2=94=80 76=C2=B0
+WED &#9728;&#65039; 52=C2=B0 =E2=94=80=E2=94=81=E2=94=81=E2=94=81=
+=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=
+=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=80 77=C2=B0
+THU &#9925;&#65039; 54=C2=B0 =E2=94=80=E2=94=80=E2=94=81=E2=94=81=
+=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=
+=E2=94=81=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80 71=C2=B0
+
+TUE &#9728;&#65039;
+53=C2=B0 =E2=94=80=E2=94=81=E2=94=81=E2=94=81=
+=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=80 76=C2=B0
+WED &#9728;&#65039;
+52=C2=B0 =E2=94=80=E2=94=81=E2=94=81=E2=94=81=
+=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=80 77=C2=B0
+THU &#9925;&#65039;
+54=C2=B0 =E2=94=80=E2=94=80=E2=94=81=E2=94=81=
+=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=80=E2=94=80=E2=94=80 71=C2=B0
+
+Weather: Today sunny, high 76, low 53. Wednesday sunny, high 77, low 52. =
+Thursday partly cloudy, high 71, low 54.
+
+
+
+Driver named in fatal crash =
+near Apple Park that killed 2-year-old Riley Howard
+
+A Santa Clara man, Eric Chen Su, 38, was arrested on suspicion of gross =
+vehicular manslaughter in the crash near Apple=E2=80=99s Cupertino =
+headquarters that killed 2-year-old Riley Kathryn Howard.
+
+What changed: The Santa Clara County medical examiner=E2=80=99s office =
+identified the toddler on Monday. Investigators developed probable cause to=
+ arrest Su but have not determined all the circumstances surrounding the =
+crash.
+
+KTVU FOX 2, Nov 9 &middot; Forward
+
+Update: Tang, Fruen and =
+Lindskog win Cupertino=E2=80=99s three council seats
+
+Decision Desk HQ=E2=80=99s Nov. 9 tally lists John Tang, J.R. Fruen and =
+Seema Lindskog as the winners of the three at-large Cupertino City Council =
+seats.
+
+What changed: Tang finished with 7,919 votes (17.57%), Fruen with 7=
+,386 (16.39%) and Lindskog with 7,221 (16.02%), after earlier partial =
+counts had them leading. San Jos=C3=A9 Spotlight reports that seating the =
+three Cupertino Together candidates would swing the council majority from =
+preservationist to pro-growth for four years.
+
+Decision Desk HQ, Nov 9 =
+&middot; Forward
+
+Japan=E2=80=99s biggest curry chain CoCo Ichibanya plans =
+first Bay Area restaurant in Cupertino
+
+CoCo Ichibanya USA
+
+CoCo Ichibanya, Japan=E2=80=99s dominant curry rice chain, plans to open =
+its first Bay Area restaurant in Cupertino in mid-December.
+
+Zoom in: The roughly 50-seat spot is at 19900 Vallco Pkwy., Suite 100, with=
+ customizable toppings like chicken cutlets, stewed beef, garlic shrimp, =
+spinach and cheese. At Southern California locations, a classic chicken =
+cutlet curry goes for $15.85.
+
+SF Chronicle via Yahoo, Nov 8 &middot; =
+Forward
+
+California=E2=80=99s Great America announces 2027 will be its =
+final season
+
+California=E2=80=99s Great America in Santa Clara announced =
+Friday that 2027 will be its final season after more than 50 years.
+
+Why it matters: Park officials say the land lease expires in June 2028 and =
+will not be renewed. The Farewell Season opens in March 2027 and ends on =
+Labor Day 2027, with operating days and hours to be announced later.
+
+KRON4, Nov 6 &middot; Forward
+
+Santa Clara man tied to school shooting =
+plans accused of lying to buy guns
+
+Prosecutors said Friday that Clayton =
+Girard, 27, of Santa Clara, who was committed to a mental institution after=
+ authorities found plans for a school shooting, lied about his mental =
+health history to buy 11 firearms.
+
+Zoom in: Girard was arrested Oct. 22, =
+and the guns included AR-style rifles, semiautomatic pistols and shotguns, =
+according to the U.S. Attorney=E2=80=99s Office for Northern California. If=
+ convicted, he faces up to 10 years in prison and a $250,000 fine for each =
+violation of federal law.
+
+Local News Matters, Nov 7 &middot; Forward
+
+Quick Hits
+
+Santa Clara=E2=80=99s City Council unanimously ended senior =
+center membership fees, which had been $12 basic and $37 premium.
+
+San Jose could approve Google=E2=80=99s Alviso data center before the city =
+finalizes its development standards, a deputy city manager said.
+
+San Jose police arrested nine people, three of them juveniles, over =
+commercial burglaries and about 50 vehicle break-ins.
+
+
+
+Events: Nov 10th=E2=80=9312th
+
+Around Town
+Cupertino Veterans Day Ceremony
+Wed 11 am =C2=B7 Memorial Park =C2=B7 Free  +
+The city's annual ceremony at=
+ the Guardians memorial, with local leaders, veterans, live music, guest =
+speakers and Taps. The town's yearly gathering, held at the memorial itself=
+ and free to attend.
+
+
+
+
+
+      Overheard
+Recent local conversations nearby
+
+
+        Cupertino law-firm show filmed in New Jersey
+
+
+          &ldquo;California has done such a fine job of driving the =
+entertainment industry out of the state that Cupertino, the new Paramount =
+show about a Silicon Valley law firm, is shot in New Jersey.
+
+Nicely done, California!&rdquo;
+
+          &mdash; @joseph_meyer on X =
+&middot; Nov 10
+
+        Joseph Meyer notes Paramount's Silicon Valley =
+series named Cupertino is shooting out of state.
+
+
+
+
+        San Jose listings dipping below 2019 prices
+
+
+          &ldquo;I had a realtor tell me I was completely wrong about =
+housing prices falling to 2019 dollar levels until I pulled up San Jose, CA=
+ and the first two properties we found that are listed and were also sold =
+in 2019 were actually lower than 2019 prices.&rdquo;
+
+          &mdash; @BryIsTheGuy on X &middot; Nov 10
+
+        A buyer says a realtor doubted falling prices until they compared =
+current San Jose homes to 2019 sales.
+
+
+
+
+
+
+
+
+
+
+      Did You Know?
+
+      Stevens Creek, which gives Cupertino's main boulevard its name, is =
+named for Elisha Stephens, who led the 1844 Stephens-Townsend-Murphy wagon =
+party over the Sierra and later settled near the creek.
+
+
+
+
+
+
+
+
+          &larr;Nov 6
+
+            Nov 10, 2026
+
+
+          See all&rarr;
+
+
+
+
+
+
+
+    &ldquo;As we express our gratitude, we must never forget that the =
+highest appreciation is not to utter words, but to live by them.&rdquo;
+
+    &mdash; John F. Kennedy
+
+
+
+&copy; 2026 Curbwire LLC  &middot;  =
+Unsubscribe
+----_NmP-58ff7c030b133459-Part_1
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+<head>
+<meta name=3D"format-detection" content=3D"telephone=3Dno,date=3Dno,address=
+=3Dno,email=3Dno">
+<style>@import url('https://fonts.googleapis.com/css2?family=3DPlayfair+Dis=
+play:ital,wght@0,400;0,700;0,800;1,400&family=3DSpectral:ital,wght@0,400;0,=
+700;1,400&family=3DJetBrains+Mono:wght@400;700&display=3Dswap');</style>
+<style>@media (min-width:481px){.cw-hd-long{display:inline !important;}.cw-=
+hd-short{display:none !important;}h1.cw-h1{font-size:76px !important;}}</st=
+yle>
+<style>@media (min-width:481px){.cw-wx-stack{display:none !important;}.cw-w=
+x-cols{display:block !important;max-height:none !important;overflow:visible=
+ !important;}}</style>
+<style>a[x-apple-data-detectors]{color:inherit!important;text-decoration:no=
+ne!important;font:inherit!important}</style>
+</head>
+<body>
+<div style=3D"background-color:#f7f1e1;margin:0;padding:0 16px;">
+<table role=3D"presentation" width=3D"600" style=3D"max-width:600px;width:1=
+00%;margin:0 auto;background-color:#f7f1e1;" cellpadding=3D"0" cellspacing=
+=3D"0">
+<tr><td style=3D"padding:0;">
+
+<!--CW-PREHEADER-START--><div data-curbwire-preheader=3D"true" style=3D"dis=
+play:none;font-size:1px;line-height:1px;max-height:0;max-width:0;opacity:0;=
+overflow:hidden;mso-hide:all;">Driver named in fatal crash near Apple Park =
+that killed 2-year-old Riley Howard&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbs=
+p;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&=
+zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwn=
+j;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&=
+nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbs=
+p;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&=
+zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;</div><!--=
+CW-PREHEADER-END--><table role=3D"presentation" cellpadding=3D"0" cellspaci=
+ng=3D"0" border=3D"0" width=3D"100%" data-curbwire-postmark=3D"true" style=
+=3D"max-width:600px;margin:0 auto;">
+  <tr>
+    <td style=3D"padding:32px 0 0 0;">
+      <h1 class=3D"cw-h1" style=3D"font-family:'Playfair Display','DM Serif=
+ Display',Georgia,'Times New Roman',serif;font-weight:800;font-size:58px;li=
+ne-height:0.98;letter-spacing:-0.015em;margin:0;color:#191713;"><span class=
+=3D"cw-hd-long" style=3D"display:none;">Hello</span><span class=3D"cw-hd-sh=
+ort">Hi</span>, 95014<span style=3D"color:#a83a25;">.</span></h1>
+    </td>
+  </tr>
+  <tr>
+    <td style=3D"padding:24px 0 20px 0;">
+      <div style=3D"font-family:'JetBrains Mono','SFMono-Regular',Menlo,Con=
+solas,monospace;font-size:13px;letter-spacing:0.12em;text-transform:upperca=
+se;line-height:22px;mso-line-height-rule:exactly;color:#5a5347;"><!--[if !m=
+so]><!--><div style=3D"float:right;line-height:44px;padding-left:16px;"><a =
+href=3D"https://link.send.curbwire.com/CL0/https:%2F%2Fcurbwire.com%2F95014=
+/1/010001a1c615f863-6a7b0be5-8e66-4b90-8309-feb991804c11-000000/YamrEyVlZL4=
+-04aG0f7twApKNTwypu53Lv7fy6zzfSs=3D452" style=3D"white-space:nowrap;color:#=
+a83a25;text-decoration:none;"><span style=3D"text-decoration:underline;text=
+-underline-offset:3px;">Read Online</span></a></div><!--<![endif]--><span s=
+tyle=3D"white-space:nowrap;color:#191713;font-weight:700;letter-spacing:0.2=
+em;">Curbwire N&ordm;6</span><br><span style=3D"white-space:nowrap;">Tue, N=
+ov 10</span></div>
+      <!--[if mso]><div style=3D"font-family:'JetBrains Mono','SFMono-Regul=
+ar',Menlo,Consolas,monospace;font-size:13px;letter-spacing:0.12em;text-tran=
+sform:uppercase;line-height:22px;mso-line-height-rule:exactly;color:#5a5347=
+;text-align:right;"><a href=3D"https://link.send.curbwire.com/CL0/https:%2F=
+%2Fcurbwire.com%2F95014/2/010001a1c615f863-6a7b0be5-8e66-4b90-8309-feb99180=
+4c11-000000/g0Ex48rvGVHOT1OwuKmdNIDbfzVQlFHLAf6kYlyxEeo=3D452" style=3D"whi=
+te-space:nowrap;color:#a83a25;text-decoration:none;"><span style=3D"text-de=
+coration:underline;text-underline-offset:3px;">Read Online</span></a></div>=
+<![endif]-->
+    </td>
+  </tr>
+</table>
+<table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" border=3D"=
+0" width=3D"100%">
+<!--CW-SECTION-START:opener--><!--CW-SECTION-END:opener-->
+<tr data-curbwire-sharestrip=3D"true"><td align=3D"center" bgcolor=3D"#f3dd=
+d4" style=3D"background-color:#f3ddd4;border-top:1px solid #a83a25;border-b=
+ottom:1px solid #a83a25;padding:14px 16px;text-align:center;"><span style=
+=3D"font-family:'Spectral',Georgia,'Times New Roman',serif;font-style:itali=
+c;font-size:18px;line-height:1.5;color:#191713;">Like Curbwire?</span>&nbsp=
+; <a href=3D"mailto:?subject=3DCurbwire%20%C2%B7%20Cupertino%20%C2%B7%20Tue=
+%2C%20Nov%2010&body=3DI%20thought%20you%27d%20want%20this%20edition%20of%20=
+Curbwire%20%E2%80%94%20the%20Cupertino%20neighborhood%20newsletter.%20Read%=
+20it%20and%20subscribe%20free%3A%20https%3A%2F%2Fcurbwire.com%2F95014%3Fref=
+%3DuC8HefYoMT2e0kJ7xn4tYHuVugHkhxZm3" style=3D"font-family:'JetBrains Mono'=
+,'SFMono-Regular',Menlo,Consolas,monospace;font-weight:700;font-size:13px;l=
+etter-spacing:0.1em;text-transform:uppercase;line-height:1.5;color:#a83a25;=
+text-decoration:underline;text-underline-offset:3px;white-space:nowrap;">Se=
+nd To A Friend&nbsp;&rarr;</a></td></tr><tr><td style=3D"height:16px;line-h=
+eight:16px;font-size:1px;">&nbsp;</td></tr>
+</table>
+<table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" border=3D"=
+0" width=3D"100%"><tr><td style=3D"padding:0;"><!--CW-SECTION-START:weather=
+--><div style=3D"border-bottom:1px solid #d8cfb8;padding:12px 0 20px 0;"><d=
+iv style=3D"margin:0 0 6px 0;"><span style=3D"font-family:'JetBrains Mono',=
+'SFMono-Regular',Menlo,Consolas,monospace;font-size:13px;font-weight:700;le=
+tter-spacing:.16em;color:#a83a25;">WEATHER</span>&nbsp;&nbsp;<span style=3D=
+"font-family:'Spectral',Georgia,'Times New Roman',serif;font-style:italic;f=
+ont-size:18px;color:#5a5347;">Warm and dry.</span></div><div class=3D"cw-wx=
+-stack" aria-hidden=3D"true"><div style=3D"font-family:'JetBrains Mono','SF=
+Mono-Regular',Menlo,Consolas,monospace;font-size:15px;white-space:nowrap;co=
+lor:#5a5347;line-height:27px;"><span style=3D"color:#a83a25;font-weight:700=
+;">TUE</span> &#9728;&#65039; 53=C2=B0 <span style=3D"color:#d8cfb8;">=E2=
+=94=80=E2=94=80</span><span style=3D"color:#d98a3a;">=E2=94=81=E2=94=81=E2=
+=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=
+=81=E2=94=81=E2=94=81=E2=94=81</span><span style=3D"color:#d8cfb8;">=E2=94=
+=80=E2=94=80</span> <span style=3D"color:#191713;font-weight:700;">76=C2=B0=
+</span></div><div style=3D"font-family:'JetBrains Mono','SFMono-Regular',Me=
+nlo,Consolas,monospace;font-size:15px;white-space:nowrap;color:#5a5347;line=
+-height:27px;"><span style=3D"color:#5a5347;font-weight:700;">WED</span> &#=
+9728;&#65039; 52=C2=B0 <span style=3D"color:#d8cfb8;">=E2=94=80</span><span=
+ style=3D"color:#e0a43c;">=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=
+=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=
+=81=E2=94=81=E2=94=81</span><span style=3D"color:#d8cfb8;">=E2=94=80</span>=
+ <span style=3D"color:#191713;font-weight:700;">77=C2=B0</span></div><div s=
+tyle=3D"font-family:'JetBrains Mono','SFMono-Regular',Menlo,Consolas,monosp=
+ace;font-size:15px;white-space:nowrap;color:#5a5347;line-height:27px;"><spa=
+n style=3D"color:#5a5347;font-weight:700;">THU</span> &#9925;&#65039; 54=C2=
+=B0 <span style=3D"color:#d8cfb8;">=E2=94=80=E2=94=80</span><span style=3D"=
+color:#e0a43c;">=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=
+=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81</span><span style=3D"color:#d8cf=
+b8;">=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80</span> <span style=3D"co=
+lor:#191713;font-weight:700;">71=C2=B0</span></div></div><div class=3D"cw-w=
+x-cols" aria-hidden=3D"true" style=3D"display:none;max-height:0;overflow:hi=
+dden;mso-hide:all;"><table role=3D"presentation" cellpadding=3D"0" cellspac=
+ing=3D"0" border=3D"0" width=3D"100%" style=3D"mso-hide:all;"><tr><td valig=
+n=3D"top" align=3D"center" style=3D"padding:0 8px;text-align:center;"><div =
+style=3D"font-family:'JetBrains Mono','SFMono-Regular',Menlo,Consolas,monos=
+pace;font-size:15px;white-space:nowrap;color:#5a5347;line-height:24px;"><sp=
+an style=3D"color:#a83a25;font-weight:700;">TUE</span> &#9728;&#65039;</div=
+><div style=3D"font-family:'JetBrains Mono','SFMono-Regular',Menlo,Consolas=
+,monospace;font-size:15px;white-space:nowrap;color:#5a5347;line-height:26px=
+;">53=C2=B0 <span style=3D"color:#d8cfb8;">=E2=94=80</span><span style=3D"c=
+olor:#d98a3a;">=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=
+=81=E2=94=81=E2=94=81</span><span style=3D"color:#d8cfb8;">=E2=94=80</span>=
+ <span style=3D"color:#191713;font-weight:700;">76=C2=B0</span></div></td><=
+td valign=3D"top" align=3D"center" style=3D"border-left:1px solid #d8cfb8;p=
+adding:0 8px;text-align:center;"><div style=3D"font-family:'JetBrains Mono'=
+,'SFMono-Regular',Menlo,Consolas,monospace;font-size:15px;white-space:nowra=
+p;color:#5a5347;line-height:24px;"><span style=3D"color:#5a5347;font-weight=
+:700;">WED</span> &#9728;&#65039;</div><div style=3D"font-family:'JetBrains=
+ Mono','SFMono-Regular',Menlo,Consolas,monospace;font-size:15px;white-space=
+:nowrap;color:#5a5347;line-height:26px;">52=C2=B0 <span style=3D"color:#d8c=
+fb8;">=E2=94=80</span><span style=3D"color:#e0a43c;">=E2=94=81=E2=94=81=E2=
+=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81</span><span st=
+yle=3D"color:#d8cfb8;">=E2=94=80</span> <span style=3D"color:#191713;font-w=
+eight:700;">77=C2=B0</span></div></td><td valign=3D"top" align=3D"center" s=
+tyle=3D"border-left:1px solid #d8cfb8;padding:0 8px;text-align:center;"><di=
+v style=3D"font-family:'JetBrains Mono','SFMono-Regular',Menlo,Consolas,mon=
+ospace;font-size:15px;white-space:nowrap;color:#5a5347;line-height:24px;"><=
+span style=3D"color:#5a5347;font-weight:700;">THU</span> &#9925;&#65039;</d=
+iv><div style=3D"font-family:'JetBrains Mono','SFMono-Regular',Menlo,Consol=
+as,monospace;font-size:15px;white-space:nowrap;color:#5a5347;line-height:26=
+px;">54=C2=B0 <span style=3D"color:#d8cfb8;">=E2=94=80=E2=94=80</span><span=
+ style=3D"color:#e0a43c;">=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=
+=94=81</span><span style=3D"color:#d8cfb8;">=E2=94=80=E2=94=80=E2=94=80</sp=
+an> <span style=3D"color:#191713;font-weight:700;">71=C2=B0</span></div></t=
+d></tr></table></div><div style=3D"display:none;max-height:0;overflow:hidde=
+n;mso-hide:all;">Weather: Today sunny, high 76, low 53. Wednesday sunny, hi=
+gh 77, low 52. Thursday partly cloudy, high 71, low 54.</div></div><!--CW-S=
+ECTION-END:weather--></td></tr></table>
+<table role=3D"presentation" width=3D"100%" cellpadding=3D"0" cellspacing=
+=3D"0"><tr><td style=3D"height:20px;line-height:20px;mso-line-height-rule:e=
+xactly;font-size:1px;">&nbsp;</td></tr></table>
+<table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" border=3D"=
+0" width=3D"100%"><!--CW-STORY-START:49f8cd54-0099-4b05-880e-51850d278815--=
+><tr><td style=3D"padding:0 0 28px 0;">
+<h2 style=3D"font-family:'Playfair Display','DM Serif Display',Georgia,'Tim=
+es New Roman',serif;font-weight:700;font-size:30px;line-height:1.14;margin:=
+0 0 16px 0;color:#191713;">
+<a href=3D"https://link.send.curbwire.com/CL0/https:%2F%2Fcurbwire.com%2F95=
+014%2Fissue%2F6%23driver-identified-in-fatal-crash-near-apple-park-that-kil=
+led-2-year-old-19752f/1/010001a1c615f863-6a7b0be5-8e66-4b90-8309-feb991804c=
+11-000000/hyaMJ6UDuHq5oDa0jlo1Te_RUNuNTqY5qeeJZ5l1TqQ=3D452" style=3D"color=
+:#191713;text-decoration:underline;text-decoration-color:#a83a25;text-under=
+line-offset:5px;">Driver named in fatal crash near Apple Park that killed 2=
+-year-old Riley Howard</a>
+</h2>
+<p style=3D"margin:0;font-family:'Spectral',Georgia,'Times New Roman',serif=
+;font-size:18px;line-height:1.55;color:#191713;">A Santa Clara man, <strong=
+>Eric Chen Su</strong>, 38, was arrested on suspicion of gross vehicular ma=
+nslaughter in the crash near Apple=E2=80=99s Cupertino headquarters that ki=
+lled 2-year-old Riley Kathryn Howard.</p>
+<p style=3D"margin:12px 0 0 0;font-family:'Spectral',Georgia,'Times New Rom=
+an',serif;font-size:18px;line-height:1.55;color:#191713;"><strong>What chan=
+ged:</strong> The Santa Clara County medical examiner=E2=80=99s office iden=
+tified the toddler on Monday. Investigators developed probable cause to arr=
+est Su but have not determined all the circumstances surrounding the crash.=
+</p>
+<p style=3D"margin:12px 0 0 0;font-family:'Spectral',Georgia,'Times New Rom=
+an',serif;font-size:18px;line-height:1.55;color:#191713;"><a href=3D"https:=
+//link.send.curbwire.com/CL0/https:%2F%2Fwww.ktvu.com%2Fnews%2Fcoroner-ids-=
+2-year-old-who-died-cupertino-car-crash/1/010001a1c615f863-6a7b0be5-8e66-4b=
+90-8309-feb991804c11-000000/MHMlEzxIKrfggcnnq5lCmIaZRjaMN-8QCZ-5fesRea8=3D4=
+52" style=3D"font-family:'JetBrains Mono','SFMono-Regular',Menlo,Consolas,m=
+onospace;font-size:15px;color:#a83a25;text-decoration:underline;text-underl=
+ine-offset:2px;">KTVU FOX 2, Nov 9</a><span style=3D"font-family:'JetBrains=
+ Mono','SFMono-Regular',Menlo,Consolas,monospace;font-size:15px;color:#a83a=
+25;color:#6B6B66;"> &middot; </span><a href=3D"mailto:?subject=3DCurbwire%3=
+A%20Driver%20named%20in%20fatal%20crash%20near%20Apple%20Park%20that%20kill=
+ed%202-year-old%20Riley%20Howard&body=3DI%20thought%20you%27d%20be%20intere=
+sted%20in%20this%20article%20I%20found%20on%20Curbwire%3A%20Driver%20named%=
+20in%20fatal%20crash%20near%20Apple%20Park%20that%20killed%202-year-old%20R=
+iley%20Howard%20https%3A%2F%2Fcurbwire.com%2F95014%2Fissue%2F6%23driver-ide=
+ntified-in-fatal-crash-near-apple-park-that-killed-2-year-old-19752f" style=
+=3D"font-family:'JetBrains Mono','SFMono-Regular',Menlo,Consolas,monospace;=
+font-size:15px;color:#a83a25;text-decoration:underline;text-underline-offse=
+t:2px;">Forward</a></p>
+</td></tr><!--CW-STORY-END:49f8cd54-0099-4b05-880e-51850d278815--><!--CW-ST=
+ORY-START:099b27d8-f5a0-431c-b3fb-78d4d2ac0171--><tr><td style=3D"padding:0=
+ 0 28px 0;">
+<h2 style=3D"font-family:'Playfair Display','DM Serif Display',Georgia,'Tim=
+es New Roman',serif;font-weight:700;font-size:30px;line-height:1.14;margin:=
+0 0 16px 0;color:#191713;">
+<a href=3D"https://link.send.curbwire.com/CL0/https:%2F%2Fcurbwire.com%2F95=
+014%2Fissue%2F6%23update-tang-fruen-and-lindskog-are-the-winners-in-cuperti=
+no-s-council-ra-ac4fa5/1/010001a1c615f863-6a7b0be5-8e66-4b90-8309-feb991804=
+c11-000000/-TwaAX9UsY5q3_tgzalgsqfMgeI4KfIMx8NvGXKHQeI=3D452" style=3D"colo=
+r:#191713;text-decoration:underline;text-decoration-color:#a83a25;text-unde=
+rline-offset:5px;">Update: Tang, Fruen and Lindskog win Cupertino=E2=80=99s=
+ three council seats</a>
+</h2>
+<p style=3D"margin:0;font-family:'Spectral',Georgia,'Times New Roman',serif=
+;font-size:18px;line-height:1.55;color:#191713;">Decision Desk HQ=E2=80=99s=
+ Nov. 9 tally lists <strong>John Tang</strong>, J.R. Fruen and Seema Lindsk=
+og as the winners of the three at-large Cupertino City Council seats.</p>
+<p style=3D"margin:12px 0 0 0;font-family:'Spectral',Georgia,'Times New Rom=
+an',serif;font-size:18px;line-height:1.55;color:#191713;"><strong>What chan=
+ged:</strong> Tang finished with 7,919 votes (17.57%), Fruen with 7,386 (16=
+.39%) and Lindskog with 7,221 (16.02%), after earlier partial counts had th=
+em leading. San Jos=C3=A9 Spotlight reports that seating the three Cupertin=
+o Together candidates would swing the council majority from preservationist=
+ to pro-growth for four years.</p>
+<p style=3D"margin:12px 0 0 0;font-family:'Spectral',Georgia,'Times New Rom=
+an',serif;font-size:18px;line-height:1.55;color:#191713;"><a href=3D"https:=
+//link.send.curbwire.com/CL0/https:%2F%2Fvotes.decisiondeskhq.com%2Fraces%2=
+F2026-11-03%2Fcalifornia-cupertino-city-council-at-large-general-election/1=
+/010001a1c615f863-6a7b0be5-8e66-4b90-8309-feb991804c11-000000/Zl30LUtHTAnYL=
+W7EvI6vZAJGjgOc7_8QYCgte6RbGas=3D452" style=3D"font-family:'JetBrains Mono'=
+,'SFMono-Regular',Menlo,Consolas,monospace;font-size:15px;color:#a83a25;tex=
+t-decoration:underline;text-underline-offset:2px;">Decision Desk HQ, Nov 9<=
+/a><span style=3D"font-family:'JetBrains Mono','SFMono-Regular',Menlo,Conso=
+las,monospace;font-size:15px;color:#a83a25;color:#6B6B66;"> &middot; </span=
+><a href=3D"mailto:?subject=3DCurbwire%3A%20Update%3A%20Tang%2C%20Fruen%20a=
+nd%20Lindskog%20win%20Cupertino%E2%80%99s%20three%20council%20seats&body=3D=
+I%20thought%20you%27d%20be%20interested%20in%20this%20article%20I%20found%2=
+0on%20Curbwire%3A%20Update%3A%20Tang%2C%20Fruen%20and%20Lindskog%20win%20Cu=
+pertino%E2%80%99s%20three%20council%20seats%20https%3A%2F%2Fcurbwire.com%2F=
+95014%2Fissue%2F6%23update-tang-fruen-and-lindskog-are-the-winners-in-cuper=
+tino-s-council-ra-ac4fa5" style=3D"font-family:'JetBrains Mono','SFMono-Reg=
+ular',Menlo,Consolas,monospace;font-size:15px;color:#a83a25;text-decoration=
+:underline;text-underline-offset:2px;">Forward</a></p>
+</td></tr><!--CW-STORY-END:099b27d8-f5a0-431c-b3fb-78d4d2ac0171--><!--CW-ST=
+ORY-START:965001a5-5816-48fc-817c-1c29ed1fb842--><tr><td style=3D"padding:0=
+ 0 28px 0;">
+<h2 style=3D"font-family:'Playfair Display','DM Serif Display',Georgia,'Tim=
+es New Roman',serif;font-weight:700;font-size:30px;line-height:1.14;margin:=
+0 0 16px 0;color:#191713;">
+<a href=3D"https://link.send.curbwire.com/CL0/https:%2F%2Fcurbwire.com%2F95=
+014%2Fissue%2F6%23japan-s-biggest-curry-chain-coco-ichibanya-to-open-its-fi=
+rst-bay-area-re-5b7553/1/010001a1c615f863-6a7b0be5-8e66-4b90-8309-feb991804=
+c11-000000/41-Lj5V-QVIdxtICQp8u_-EdKAKadscCZneq5woqG6U=3D452" style=3D"colo=
+r:#191713;text-decoration:underline;text-decoration-color:#a83a25;text-unde=
+rline-offset:5px;">Japan=E2=80=99s biggest curry chain CoCo Ichibanya plans=
+ first Bay Area restaurant in Cupertino</a>
+</h2>
+<div data-cw-photo=3D"e4d4f1e4a7ad446eb2f6147710592305" style=3D"margin:0;"=
+><img src=3D"https://img.curbwire.com/photos/e4d4f1e4a7ad446eb2f61477105923=
+05.jpg" width=3D"600" alt=3D"Photo for: Japan&#39;s biggest curry chain CoC=
+o Ichibanya to open its first Bay Area restaurant in Cupertino" style=3D"di=
+splay:block;width:100%;max-width:600px;height:auto;border:0;" /><p style=3D=
+"margin:4px 0 12px 0;font-family:'JetBrains Mono','SFMono-Regular',Menlo,Co=
+nsolas,monospace;font-size:11px;line-height:1.4;color:#5a5347;text-align:ri=
+ght;"><a href=3D"https://link.send.curbwire.com/CL0/https:%2F%2Fichibanyaus=
+a.com/1/010001a1c615f863-6a7b0be5-8e66-4b90-8309-feb991804c11-000000/YKh1uF=
+DXXAFpj5nIpyrkj7PNom0urbuVQVGsgAtqD1Q=3D452" style=3D"color:#5a5347;text-de=
+coration:underline;text-underline-offset:2px;">CoCo Ichibanya USA</a></p></=
+div><p style=3D"margin:0;font-family:'Spectral',Georgia,'Times New Roman',s=
+erif;font-size:18px;line-height:1.55;color:#191713;">CoCo Ichibanya, Japan=
+=E2=80=99s dominant curry rice chain, plans to open its first Bay Area rest=
+aurant in Cupertino in <strong>mid-December</strong>.</p>
+<p style=3D"margin:12px 0 0 0;font-family:'Spectral',Georgia,'Times New Rom=
+an',serif;font-size:18px;line-height:1.55;color:#191713;"><strong>Zoom in:<=
+/strong> The roughly 50-seat spot is at <strong>19900 Vallco Pkwy., Suite 1=
+00</strong>, with customizable toppings like chicken cutlets, stewed beef, =
+garlic shrimp, spinach and cheese. At Southern California locations, a clas=
+sic chicken cutlet curry goes for $15.85.</p>
+<p style=3D"margin:12px 0 0 0;font-family:'Spectral',Georgia,'Times New Rom=
+an',serif;font-size:18px;line-height:1.55;color:#191713;"><a href=3D"https:=
+//link.send.curbwire.com/CL0/https:%2F%2Fwww.yahoo.com%2Flifestyle%2Farticl=
+es%2Fjapans-biggest-curry-chain-opening-130000367.html/1/010001a1c615f863-6=
+a7b0be5-8e66-4b90-8309-feb991804c11-000000/7Kegr6ZHea1G--Ii75jftZhJujYzroBH=
+_1qual2ydj8=3D452" style=3D"font-family:'JetBrains Mono','SFMono-Regular',M=
+enlo,Consolas,monospace;font-size:15px;color:#a83a25;text-decoration:underl=
+ine;text-underline-offset:2px;">SF Chronicle via Yahoo, Nov 8</a><span styl=
+e=3D"font-family:'JetBrains Mono','SFMono-Regular',Menlo,Consolas,monospace=
+;font-size:15px;color:#a83a25;color:#6B6B66;"> &middot; </span><a href=3D"m=
+ailto:?subject=3DCurbwire%3A%20Japan%E2%80%99s%20biggest%20curry%20chain%20=
+CoCo%20Ichibanya%20plans%20first%20Bay%20Area%20restaurant%20in%20Cupertino=
+&body=3DI%20thought%20you%27d%20be%20interested%20in%20this%20article%20I%2=
+0found%20on%20Curbwire%3A%20Japan%E2%80%99s%20biggest%20curry%20chain%20CoC=
+o%20Ichibanya%20plans%20first%20Bay%20Area%20restaurant%20in%20Cupertino%20=
+https%3A%2F%2Fcurbwire.com%2F95014%2Fissue%2F6%23japan-s-biggest-curry-chai=
+n-coco-ichibanya-to-open-its-first-bay-area-re-5b7553" style=3D"font-family=
+:'JetBrains Mono','SFMono-Regular',Menlo,Consolas,monospace;font-size:15px;=
+color:#a83a25;text-decoration:underline;text-underline-offset:2px;">Forward=
+</a></p>
+</td></tr><!--CW-STORY-END:965001a5-5816-48fc-817c-1c29ed1fb842--><!--CW-ST=
+ORY-START:b55d4876-964a-442a-b86c-0826d12d2ff7--><tr><td style=3D"padding:0=
+ 0 28px 0;">
+<h2 style=3D"font-family:'Playfair Display','DM Serif Display',Georgia,'Tim=
+es New Roman',serif;font-weight:700;font-size:30px;line-height:1.14;margin:=
+0 0 16px 0;color:#191713;">
+<a href=3D"https://link.send.curbwire.com/CL0/https:%2F%2Fcurbwire.com%2F95=
+014%2Fissue%2F6%23california-s-great-america-in-santa-clara-announces-final=
+-season-06e388/1/010001a1c615f863-6a7b0be5-8e66-4b90-8309-feb991804c11-0000=
+00/zVKtsZm45b-qtjnjWKgLHAEi9mPZ5ouwkAVfZcCvDmo=3D452" style=3D"color:#19171=
+3;text-decoration:underline;text-decoration-color:#a83a25;text-underline-of=
+fset:5px;">California=E2=80=99s Great America announces 2027 will be its fi=
+nal season</a>
+</h2>
+<p style=3D"margin:0;font-family:'Spectral',Georgia,'Times New Roman',serif=
+;font-size:18px;line-height:1.55;color:#191713;">California=E2=80=99s Great=
+ America in Santa Clara announced Friday that <strong>2027</strong> will be=
+ its final season after more than 50 years.</p>
+<p style=3D"margin:12px 0 0 0;font-family:'Spectral',Georgia,'Times New Rom=
+an',serif;font-size:18px;line-height:1.55;color:#191713;"><strong>Why it ma=
+tters:</strong> Park officials say the land lease expires in June 2028 and =
+will not be renewed. The Farewell Season opens in March 2027 and ends on La=
+bor Day 2027, with operating days and hours to be announced later.</p>
+<p style=3D"margin:12px 0 0 0;font-family:'Spectral',Georgia,'Times New Rom=
+an',serif;font-size:18px;line-height:1.55;color:#191713;"><a href=3D"https:=
+//link.send.curbwire.com/CL0/https:%2F%2Fwww.kron4.com%2Fnews%2Fbay-area%2F=
+californias-great-america-in-santa-clara-announces-final-season-what-guests=
+-need-to-know/1/010001a1c615f863-6a7b0be5-8e66-4b90-8309-feb991804c11-00000=
+0/AWwGGEAG_b3NWnbOwFe336rEuxood1M21OpX4oa6q0A=3D452" style=3D"font-family:'=
+JetBrains Mono','SFMono-Regular',Menlo,Consolas,monospace;font-size:15px;co=
+lor:#a83a25;text-decoration:underline;text-underline-offset:2px;">KRON4, No=
+v 6</a><span style=3D"font-family:'JetBrains Mono','SFMono-Regular',Menlo,C=
+onsolas,monospace;font-size:15px;color:#a83a25;color:#6B6B66;"> &middot; </=
+span><a href=3D"mailto:?subject=3DCurbwire%3A%20California%E2%80%99s%20Grea=
+t%20America%20announces%202027%20will%20be%20its%20final%20season&body=3DI%=
+20thought%20you%27d%20be%20interested%20in%20this%20article%20I%20found%20o=
+n%20Curbwire%3A%20California%E2%80%99s%20Great%20America%20announces%202027=
+%20will%20be%20its%20final%20season%20https%3A%2F%2Fcurbwire.com%2F95014%2F=
+issue%2F6%23california-s-great-america-in-santa-clara-announces-final-seaso=
+n-06e388" style=3D"font-family:'JetBrains Mono','SFMono-Regular',Menlo,Cons=
+olas,monospace;font-size:15px;color:#a83a25;text-decoration:underline;text-=
+underline-offset:2px;">Forward</a></p>
+</td></tr><!--CW-STORY-END:b55d4876-964a-442a-b86c-0826d12d2ff7--><!--CW-ST=
+ORY-START:44934e91-0119-48bc-8765-a4452feb92da--><tr><td style=3D"padding:0=
+ 0 28px 0;">
+<h2 style=3D"font-family:'Playfair Display','DM Serif Display',Georgia,'Tim=
+es New Roman',serif;font-weight:700;font-size:30px;line-height:1.14;margin:=
+0 0 16px 0;color:#191713;">
+<a href=3D"https://link.send.curbwire.com/CL0/https:%2F%2Fcurbwire.com%2F95=
+014%2Fissue%2F6%23santa-clara-man-tied-to-school-shooting-plans-accused-of-=
+lying-to-get-gu-7f74e9/1/010001a1c615f863-6a7b0be5-8e66-4b90-8309-feb991804=
+c11-000000/hWFPQ5Q7EICe0ou56A-rNINPYTjuuZBiGYEEUtC_CPs=3D452" style=3D"colo=
+r:#191713;text-decoration:underline;text-decoration-color:#a83a25;text-unde=
+rline-offset:5px;">Santa Clara man tied to school shooting plans accused of=
+ lying to buy guns</a>
+</h2>
+<p style=3D"margin:0;font-family:'Spectral',Georgia,'Times New Roman',serif=
+;font-size:18px;line-height:1.55;color:#191713;">Prosecutors said Friday th=
+at <strong>Clayton Girard</strong>, 27, of Santa Clara, who was committed t=
+o a mental institution after authorities found plans for a school shooting,=
+ lied about his mental health history to buy 11 firearms.</p>
+<p style=3D"margin:12px 0 0 0;font-family:'Spectral',Georgia,'Times New Rom=
+an',serif;font-size:18px;line-height:1.55;color:#191713;"><strong>Zoom in:<=
+/strong> Girard was arrested Oct. 22, and the guns included AR-style rifles=
+, semiautomatic pistols and shotguns, according to the U.S. Attorney=E2=80=
+=99s Office for Northern California. If convicted, he faces up to 10 years =
+in prison and a $250,000 fine for each violation of federal law.</p>
+<p style=3D"margin:12px 0 0 0;font-family:'Spectral',Georgia,'Times New Rom=
+an',serif;font-size:18px;line-height:1.55;color:#191713;"><a href=3D"https:=
+//link.send.curbwire.com/CL0/https:%2F%2Flocalnewsmatters.org%2F2026%2F11%2=
+F07%2Fsanta-clara-man-tied-to-school-shooting-plans-accused-of-lying-to-get=
+-guns/1/010001a1c615f863-6a7b0be5-8e66-4b90-8309-feb991804c11-000000/U-3uzz=
+EXQ-pbLR7ZMHLRok4rZNr2mGSpEwG10xbT_wE=3D452" style=3D"font-family:'JetBrain=
+s Mono','SFMono-Regular',Menlo,Consolas,monospace;font-size:15px;color:#a83=
+a25;text-decoration:underline;text-underline-offset:2px;">Local News Matter=
+s, Nov 7</a><span style=3D"font-family:'JetBrains Mono','SFMono-Regular',Me=
+nlo,Consolas,monospace;font-size:15px;color:#a83a25;color:#6B6B66;"> &middo=
+t; </span><a href=3D"mailto:?subject=3DCurbwire%3A%20Santa%20Clara%20man%20=
+tied%20to%20school%20shooting%20plans%20accused%20of%20lying%20to%20buy%20g=
+uns&body=3DI%20thought%20you%27d%20be%20interested%20in%20this%20article%20=
+I%20found%20on%20Curbwire%3A%20Santa%20Clara%20man%20tied%20to%20school%20s=
+hooting%20plans%20accused%20of%20lying%20to%20buy%20guns%20https%3A%2F%2Fcu=
+rbwire.com%2F95014%2Fissue%2F6%23santa-clara-man-tied-to-school-shooting-pl=
+ans-accused-of-lying-to-get-gu-7f74e9" style=3D"font-family:'JetBrains Mono=
+','SFMono-Regular',Menlo,Consolas,monospace;font-size:15px;color:#a83a25;te=
+xt-decoration:underline;text-underline-offset:2px;">Forward</a></p>
+</td></tr><!--CW-STORY-END:44934e91-0119-48bc-8765-a4452feb92da--><!--CW-SE=
+CTION-START:quick_hits--><tr><td style=3D"padding:28px 0 0 0;">
+<div data-cw-header=3D"1" style=3D"font-family:'Playfair Display','DM Serif=
+ Display',Georgia,'Times New Roman',serif;font-style:italic;font-weight:400=
+;font-size:34px;line-height:1.2;color:#191713;margin:0 0 16px 0;">Quick Hit=
+s</div>
+<ul style=3D"margin:0;padding:0 0 0 20px;font-family:'Spectral',Georgia,'Ti=
+mes New Roman',serif;font-size:18px;line-height:1.55;color:#191713;">
+<li style=3D"margin:0 0 12px 0;">Santa Clara=E2=80=99s City Council unanimo=
+usly <a href=3D"https://link.send.curbwire.com/CL0/https:%2F%2Fsanjosespotl=
+ight.com%2Fsanta-clara-ends-membership-fees-at-senior-center/1/010001a1c615=
+f863-6a7b0be5-8e66-4b90-8309-feb991804c11-000000/KN9eyn48ck9BucNkrtWX982L68=
+0SaNBJ07Hby9UXzPQ=3D452" style=3D"color:#a83a25;text-decoration:underline;t=
+ext-underline-offset:2px;">ended senior center membership fees</a>, which h=
+ad been $12 basic and $37 premium.</li>
+<li style=3D"margin:0 0 12px 0;">San Jose <a href=3D"https://link.send.curb=
+wire.com/CL0/https:%2F%2Fsanjosespotlight.com%2Fgoogle-data-center-could-be=
+-approved-before-san-jose-sets-standards%2F/1/010001a1c615f863-6a7b0be5-8e6=
+6-4b90-8309-feb991804c11-000000/tXyhdIHU3ymMEoRiIsgL43ukM9zT0SFy_j4NpC4O6Ns=
+=3D452" style=3D"color:#a83a25;text-decoration:underline;text-underline-off=
+set:2px;">could approve Google=E2=80=99s Alviso data center</a> before the =
+city finalizes its development standards, a deputy city manager said.</li>
+<li style=3D"margin:0;">San Jose police <a href=3D"https://link.send.curbwi=
+re.com/CL0/https:%2F%2Fwww.kron4.com%2Fnews%2Fbay-area%2F9-arrested-in-conn=
+ection-to-commercial-and-vehicle-burglaries-across-san-jose/1/010001a1c615f=
+863-6a7b0be5-8e66-4b90-8309-feb991804c11-000000/DimTcR0HroBj8X_NTvmJcBOFukb=
+C2vZD641P0IQzwOM=3D452" style=3D"color:#a83a25;text-decoration:underline;te=
+xt-underline-offset:2px;">arrested nine people, three of them juveniles</a>=
+, over commercial burglaries and about 50 vehicle break-ins.</li>
+</ul>
+</td></tr><!--CW-SECTION-END:quick_hits--></table>
+
+<table role=3D"presentation" width=3D"100%" cellpadding=3D"0" cellspacing=
+=3D"0"><tr><td style=3D"height:56px;line-height:56px;mso-line-height-rule:e=
+xactly;font-size:1px;">&nbsp;</td></tr></table>
+<!--CW-SECTION-START:leave_the_house--><table role=3D"presentation" cellpad=
+ding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tr><td style=3D"padding:0;">
+<div data-cw-header=3D"1" style=3D"font-family:'Playfair Display','DM Serif=
+ Display',Georgia,'Times New Roman',serif;font-style:italic;font-weight:400=
+;font-size:34px;line-height:1.2;color:#191713;margin:0 0 16px 0;">Events: N=
+ov 10th=E2=80=9312th</div>
+<div style=3D"border-left:3px solid #3d6b4f;padding:0 0 0 16px;margin:0 0 2=
+8px 0;"><div style=3D"font-family:'JetBrains Mono','SFMono-Regular',Menlo,C=
+onsolas,monospace;font-size:13px;letter-spacing:0.14em;text-transform:upper=
+case;font-weight:700;color:#3d6b4f;margin:0 0 8px 0;">Around Town</div><div=
+ style=3D"font-family:'Playfair Display','DM Serif Display',Georgia,'Times =
+New Roman',serif;font-weight:700;font-size:20px;line-height:1.25;color:#191=
+713;margin:0 0 6px 0;">Cupertino Veterans Day Ceremony</div><div style=3D"f=
+ont-family:'JetBrains Mono','SFMono-Regular',Menlo,Consolas,monospace;font-=
+size:13px;line-height:1.45;color:#5a5347;margin:0 0 8px 0;">Wed 11 am =C2=
+=B7 <a href=3D"https://link.send.curbwire.com/CL0/https:%2F%2Fwww.cupertino=
+.gov%2FParks-Recreation%2FEvents%2FFestivals%2FVeterans-Day-Ceremony/1/0100=
+01a1c615f863-6a7b0be5-8e66-4b90-8309-feb991804c11-000000/ZnPAKqCVVdHpwZfNR1=
+gWPuQHyU8zhPck0Oybknn2DMY=3D452" style=3D"color:#191713;text-decoration:und=
+erline;text-underline-offset:2px;">Memorial Park</a> =C2=B7 Free &nbsp;<a h=
+ref=3D"https://link.send.curbwire.com/CL0/https:%2F%2Fcalendar.google.com%2=
+Fcalendar%2Frender%3Faction=3DTEMPLATE%26text=3DCupertino%2BVeterans%2BDay%=
+2BCeremony%26dates=3D20261111T110000%252F20261111T130000%26ctz=3DAmerica%25=
+2FLos_Angeles%26details=3DThe%2Bcity%2527s%2Bannual%2Bceremony%2Bat%2Bthe%2=
+BGuardians%2Bmemorial%252C%2Bwith%2Blocal%2Bleaders%252C%2Bveterans%252C%2B=
+live%2Bmusic%252C%2Bguest%2Bspeakers%2Band%2BTaps.%2BThe%2Btown%2527s%2Byea=
+rly%2Bgathering%252C%2Bheld%2Bat%2Bthe%2Bmemorial%2Bitself%2Band%2Bfree%2Bt=
+o%2Battend.%250A%250Ahttps%253A%252F%252Fwww.cupertino.gov%252FParks-Recrea=
+tion%252FEvents%252FFestivals%252FVeterans-Day-Ceremony%250A%250APicked%2Bb=
+y%2BCurbwire%252C%2Bthe%2BCupertino%2B%2528Cupertino%252C%2BCA%2529%2Bnewsl=
+etter%253A%2Bcurbwire.com%252F95014%26location=3DMemorial%2BPark/1/010001a1=
+c615f863-6a7b0be5-8e66-4b90-8309-feb991804c11-000000/_QxcaPQsT2FgIt0yplf7Qg=
+A0bFdsrZVOAt77sQA-cgk=3D452" title=3D"Add to calendar" aria-label=3D"Add to=
+ calendar" style=3D"display:inline-block;vertical-align:1px;min-width:11px;=
+text-align:center;background:#ffffff;border:1px solid #5a5347;border-top:4p=
+x solid #a83a25;border-radius:2px;padding:0 2px;font-family:'JetBrains Mono=
+','SFMono-Regular',Menlo,Consolas,monospace;font-size:10px;line-height:11px=
+;font-weight:700;color:#a83a25;text-decoration:none;white-space:nowrap;">+<=
+/a></div><div style=3D"font-family:'Spectral',Georgia,'Times New Roman',ser=
+if;font-size:18px;line-height:1.5;color:#191713;margin:0;">The city&#39;s a=
+nnual ceremony at the Guardians memorial, with local leaders, veterans, liv=
+e music, guest speakers and Taps. The town&#39;s yearly gathering, held at =
+the memorial itself and free to attend.</div></div>
+
+</td></tr>
+</table><!--CW-SECTION-END:leave_the_house-->
+
+<table role=3D"presentation" width=3D"100%" cellpadding=3D"0" cellspacing=
+=3D"0"><tr><td style=3D"height:56px;line-height:56px;mso-line-height-rule:e=
+xactly;font-size:1px;">&nbsp;</td></tr></table>
+<!--CW-SECTION-START:overheard--><table role=3D"presentation" cellpadding=
+=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+  <tr>
+    <td style=3D"padding:0;">
+      <div data-cw-header=3D"1" style=3D"font-family:'Playfair Display','DM=
+ Serif Display',Georgia,'Times New Roman',serif;font-style:italic;font-weig=
+ht:400;font-size:34px;line-height:1.2;color:#191713;margin:0 0 8px 0;">Over=
+heard</div><div style=3D"font-family:'Spectral',Georgia,'Times New Roman',s=
+erif;font-style:italic;font-size:18px;line-height:1.4;color:#5a5347;margin:=
+0 0 20px 0;">Recent local conversations nearby</div>
+      <div style=3D"margin-bottom:24px;">
+        <h3 style=3D"font-family: 'Playfair Display','DM Serif Display',Geo=
+rgia,'Times New Roman',serif; font-size: 20px; font-weight: 700; color: #19=
+1713; margin:0 0 8px;">Cupertino law-firm show filmed in New Jersey</h3>
+        <blockquote style=3D"margin:0 0 8px; padding:0 0 0 12px; border-lef=
+t: 3px solid #6B6B66;">
+          <p style=3D"font-family: 'Spectral',Georgia,'Times New Roman',ser=
+if; font-size: 18px; font-style: italic; line-height: 1.55; color: #191713;=
+ margin:0 0 8px;">&ldquo;California has done such a fine job of driving the=
+ entertainment industry out of the state that Cupertino, the new Paramount =
+show about a Silicon Valley law firm, is shot in New Jersey.
+
+Nicely done, California!&rdquo;</p></blockquote>
+          <p style=3D"font-family: 'JetBrains Mono','SFMono-Regular',Menlo,=
+Consolas,monospace; font-size: 13px; line-height: 1.45; color: #5a5347; mar=
+gin:0 0 12px 0;padding-left:16px;">&mdash; <a href=3D"https://link.send.cur=
+bwire.com/CL0/https:%2F%2Fx.com%2Fjoseph_meyer%2Fstatus%2F21199792071407618=
+13/1/010001a1c615f863-6a7b0be5-8e66-4b90-8309-feb991804c11-000000/6Sqdqfb4q=
+Cg1iJasYedDZd7aDtdeqlUS7DhwJbyR20A=3D452" style=3D"color:#a83a25;text-decor=
+ation:underline;text-underline-offset:2px;">@joseph_meyer</a> on <span styl=
+e=3D"color:#6B6B66;">X</span> &middot; Nov 10</p>
+        <p style=3D"font-family: 'Spectral',Georgia,'Times New Roman',serif=
+; font-size: 18px; line-height: 1.55; color: #191713; margin:0;">Joseph Mey=
+er notes Paramount&#39;s Silicon Valley series named Cupertino is shooting =
+out of state.</p>
+      </div>
+      <div style=3D"margin-bottom:0;">
+        <h3 style=3D"font-family: 'Playfair Display','DM Serif Display',Geo=
+rgia,'Times New Roman',serif; font-size: 20px; font-weight: 700; color: #19=
+1713; margin:0 0 8px;">San Jose listings dipping below 2019 prices</h3>
+        <blockquote style=3D"margin:0 0 8px; padding:0 0 0 12px; border-lef=
+t: 3px solid #6B6B66;">
+          <p style=3D"font-family: 'Spectral',Georgia,'Times New Roman',ser=
+if; font-size: 18px; font-style: italic; line-height: 1.55; color: #191713;=
+ margin:0 0 8px;">&ldquo;I had a realtor tell me I was completely wrong abo=
+ut housing prices falling to 2019 dollar levels until I pulled up San Jose,=
+ CA and the first two properties we found that are listed and were also sol=
+d in 2019 were actually lower than 2019 prices.&rdquo;</p></blockquote>
+          <p style=3D"font-family: 'JetBrains Mono','SFMono-Regular',Menlo,=
+Consolas,monospace; font-size: 13px; line-height: 1.45; color: #5a5347; mar=
+gin:0 0 12px 0;padding-left:16px;">&mdash; <a href=3D"https://link.send.cur=
+bwire.com/CL0/https:%2F%2Fx.com%2FBryIsTheGuy%2Fstatus%2F211995526551268586=
+0/1/010001a1c615f863-6a7b0be5-8e66-4b90-8309-feb991804c11-000000/lvnLPj6ty7=
+WtB1ng3IOmFJnQEwsysWFG1jYgL2FBV9o=3D452" style=3D"color:#a83a25;text-decora=
+tion:underline;text-underline-offset:2px;">@BryIsTheGuy</a> on <span style=
+=3D"color:#6B6B66;">X</span> &middot; Nov 10</p>
+        <p style=3D"font-family: 'Spectral',Georgia,'Times New Roman',serif=
+; font-size: 18px; line-height: 1.55; color: #191713; margin:0;">A buyer sa=
+ys a realtor doubted falling prices until they compared current San Jose ho=
+mes to 2019 sales.</p>
+      </div>
+    </td>
+  </tr>
+</table><!--CW-SECTION-END:overheard-->
+<table role=3D"presentation" width=3D"100%" cellpadding=3D"0" cellspacing=
+=3D"0"><tr><td style=3D"height:56px;line-height:56px;mso-line-height-rule:e=
+xactly;font-size:1px;">&nbsp;</td></tr></table>
+<!--CW-SECTION-START:dyk--><table role=3D"presentation" cellpadding=3D"0" c=
+ellspacing=3D"0" border=3D"0" width=3D"100%">
+  <tr>
+    <td style=3D"padding:0;">
+      <div data-cw-header=3D"1" style=3D"font-family:'Playfair Display','DM=
+ Serif Display',Georgia,'Times New Roman',serif;font-style:italic;font-weig=
+ht:400;font-size:34px;line-height:1.2;color:#191713;margin:0 0 16px 0;">Did=
+ You Know?</div>
+      <p style=3D"font-family: 'Spectral',Georgia,'Times New Roman',serif; =
+font-size: 18px; line-height: 1.55; color: #191713; margin:0;">Stevens Cree=
+k, which gives Cupertino&#39;s main boulevard its name, is named for Elisha=
+ Stephens, who led the 1844 Stephens-Townsend-Murphy wagon party over the S=
+ierra and later settled near the creek.</p>
+    </td>
+  </tr>
+</table><!--CW-SECTION-END:dyk-->
+
+<table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" border=3D"=
+0" width=3D"100%" data-curbwire-bottomchrome=3D"true" style=3D"max-width:60=
+0px;margin:0 auto;">
+  <tr>
+    <td style=3D"padding:32px 0 0;">
+      <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" bord=
+er=3D"0" width=3D"100%" style=3D"border-top:1px solid #191713;">
+        <tr>
+          <td width=3D"30%" valign=3D"middle" style=3D"font-family:'JetBrai=
+ns Mono','SFMono-Regular',Menlo,Consolas,monospace;font-size:13px;letter-sp=
+acing:0.12em;text-transform:uppercase;line-height:2;color:#5a5347;width:30%=
+;vertical-align:middle;padding:12px 0;white-space:nowrap;"><a href=3D"https=
+://link.send.curbwire.com/CL0/https:%2F%2Fcurbwire.com%2F95014%2Fissue%2F5/=
+1/010001a1c615f863-6a7b0be5-8e66-4b90-8309-feb991804c11-000000/m29YRWAUVmwj=
+BuZuOOigYvvxO873X3_8Fkw37vJzSec=3D452" style=3D"color:#a83a25;text-decorati=
+on:none;">&larr;<span style=3D"padding-left:4px;text-decoration:underline;t=
+ext-underline-offset:3px;">Nov 6</span></a></td>
+          <td width=3D"40%" align=3D"center" valign=3D"middle" style=3D"wid=
+th:40%;text-align:center;vertical-align:middle;padding:12px 12px;white-spac=
+e:nowrap;">
+            <div style=3D"font-family:'Playfair Display','DM Serif Display'=
+,Georgia,'Times New Roman',serif;font-style:italic;font-size:18px;color:#19=
+1713;">Nov 10, 2026</div>
+          </td>
+          <td width=3D"30%" align=3D"right" valign=3D"middle" style=3D"font=
+-family:'JetBrains Mono','SFMono-Regular',Menlo,Consolas,monospace;font-siz=
+e:13px;letter-spacing:0.12em;text-transform:uppercase;line-height:2;color:#=
+5a5347;width:30%;text-align:right;vertical-align:middle;padding:12px 0;whit=
+e-space:nowrap;"><a href=3D"https://link.send.curbwire.com/CL0/https:%2F%2F=
+curbwire.com%2F95014/3/010001a1c615f863-6a7b0be5-8e66-4b90-8309-feb991804c1=
+1-000000/-mFsrBrxvRTJ7Isjh1vf3B46Nd4i8rcOByxLMswqFps=3D452" style=3D"color:=
+#a83a25;text-decoration:none;"><span style=3D"text-decoration:underline;tex=
+t-underline-offset:3px;">See all</span><span style=3D"padding-left:4px;">&r=
+arr;</span></a></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" border=3D"=
+0" width=3D"100%">
+<tr><td style=3D"padding:0;"><div style=3D"border-top:1px solid #191713;"><=
+/div></td></tr>
+</table>
+<!--CW-SECTION-START:quote--><table role=3D"presentation" cellpadding=3D"0"=
+ cellspacing=3D"0" border=3D"0" width=3D"100%" data-curbwire-quote=3D"true"=
+ style=3D"max-width:600px;margin:0 auto;">
+  <tr><td align=3D"center" style=3D"padding:56px 32px 0;text-align:center;"=
+>
+    <p style=3D"margin:0;font-family:'Spectral',Georgia,'Times New Roman',s=
+erif;font-style:italic;font-size:18px;line-height:1.5;color:#191713;">&ldqu=
+o;As we express our gratitude, we must never forget that the highest apprec=
+iation is not to utter words, but to live by them.&rdquo;</p>
+    <p style=3D"margin:12px 0 0;font-family:'JetBrains Mono','SFMono-Regula=
+r',Menlo,Consolas,monospace;font-size:13px;letter-spacing:0.12em;color:#5a5=
+347;text-transform:uppercase;">&mdash; John F. Kennedy</p>
+  </td></tr>
+</table><!--CW-SECTION-END:quote-->
+<table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" border=3D"=
+0" width=3D"100%">
+<tr><td align=3D"center" style=3D"padding:24px 0 32px 0;font-family:'JetBra=
+ins Mono','SFMono-Regular',Menlo,Consolas,monospace;font-size:13px;line-hei=
+ght:1.6;color:#6B6B66;text-align:center;">
+<p style=3D"margin:0;font-family:'JetBrains Mono','SFMono-Regular',Menlo,Co=
+nsolas,monospace;font-size:13px;line-height:1.6;color:#6B6B66;">&copy; 2026=
+ Curbwire LLC &nbsp;&middot;&nbsp; <a href=3D"https://link.send.curbwire.co=
+m/CL0/https:%2F%2Fcurbwire.com%2Fapi%2Funsubscribe%3Ft=3DeyJzdWIiOiIwYmMxZG=
+U3ZC04YTBjLTRmNjctYjQ5MC05ZWYxOWY4YjU4MWUiLCJraW5kIjoidW5zdWIifQ.fac437debe=
+d4c49be44b51fd0aed7a0ecbb86b4ffa52ecb38fa36bf47a297833/1/010001a1c615f863-6=
+a7b0be5-8e66-4b90-8309-feb991804c11-000000/OPjtyo4HUOdywnN9wP0GotBeOj_pzzHt=
+3c9J3YzfTvw=3D452" style=3D"color:#6B6B66;text-decoration:underline;text-un=
+derline-offset:2px;">Unsubscribe</a></p>
+</td></tr>
+</table>
+</td></tr>
+</table>
+</div>
+<!--CW-UX-APPLIED:v3-->
+<img alt=3D"" src=3D"https://link.send.curbwire.com/CI0/010001a1c615f863-6a=
+7b0be5-8e66-4b90-8309-feb991804c11-000000/8bUhsMT-DKC9TKtKZ4Ijo8ZNSNRNahJh5=
+-tf0oW26rk=3D452" style=3D"display: none; width: 1px; height: 1px;">
+</body>
+</html>
+----_NmP-58ff7c030b133459-Part_1--
