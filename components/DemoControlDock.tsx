@@ -218,19 +218,32 @@ export default function DemoControlDock({ initialLocation, initialDemo }: DemoCo
           {/* Simulate Verdict */}
           <button
             type="button"
-            disabled={telemetry.verdictAlertLeads === 0}
-            onClick={() => setIsVerdictOpen(true)}
+            onClick={() => {
+              if (telemetry.verdictAlertLeads === 0) {
+                toast('Simulate Verdict is locked', {
+                  description: 'Submit an email on the Vallco card with "Notify me" checked to trigger this loop payoff.',
+                  action: {
+                    label: 'Preview Modal',
+                    onClick: () => setIsVerdictOpen(true),
+                  },
+                });
+                return;
+              }
+              setIsVerdictOpen(true);
+            }}
             className={`flex-1 min-w-[140px] flex items-center justify-center gap-1.5 py-1.5 px-2.5 rounded text-xs font-semibold transition shadow-xs ${
               telemetry.verdictAlertLeads > 0
                 ? 'bg-amber-500 hover:bg-amber-400 text-black animate-pulse cursor-pointer'
-                : 'bg-white/10 text-white/40 cursor-not-allowed'
+                : 'bg-white/10 hover:bg-white/15 text-white/60 cursor-pointer'
             }`}
-            title={telemetry.verdictAlertLeads === 0 ? 'Requires at least 1 local verdict lead' : 'Simulate Planning Commission verdict payoff'}
+            title={telemetry.verdictAlertLeads === 0 ? 'Click to see trigger steps or preview modal' : 'Simulate Planning Commission verdict payoff'}
           >
-            <Zap className="w-3.5 h-3.5" />
+            <Zap className={`w-3.5 h-3.5 ${telemetry.verdictAlertLeads > 0 ? 'text-black fill-black' : 'text-amber-400/70'}`} />
             <span>Simulate Verdict</span>
-            {telemetry.verdictAlertLeads > 0 && (
+            {telemetry.verdictAlertLeads > 0 ? (
               <span className="w-2 h-2 rounded-full bg-black"></span>
+            ) : (
+              <span className="text-[10px] text-white/40 font-normal">(Locked)</span>
             )}
           </button>
 
