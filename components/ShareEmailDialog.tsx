@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { X, Mail, Copy } from 'lucide-react';
 import { toast } from 'sonner';
+import { getShareEmailCopy } from '@/lib/share-copy';
 
 export interface ShareTarget {
   type: 'card' | 'issue' | 'waitlist';
@@ -43,26 +44,8 @@ export default function ShareEmailDialog({
 
   if (!isOpen) return null;
 
-  const displayName = senderName.trim() || 'A neighbor';
-  const cleanCity = target.cityName ? target.cityName.split(',')[0].trim() : 'our neighborhood';
+  const { subject, body } = getShareEmailCopy(target, shareUrl, senderName);
 
-  // Compute Subject and Body based on target type
-  let subject = '';
-  let body = '';
-
-  if (target.type === 'card') {
-    subject = target.title;
-    body = `${displayName} thought you'd be interested in this article. Click ${shareUrl} to see!`;
-  } else if (target.type === 'issue') {
-    subject = `Curbwire for ${target.zip || 'Cupertino'}`;
-    body = `${displayName} thought you'd be interested in this newsletter. Click ${shareUrl} to see!`;
-  } else {
-    // waitlist
-    subject = `Help bring Curbwire to ${cleanCity}`;
-    body = `${displayName} is trying to bring Curbwire to ${cleanCity}. Click ${shareUrl} to add your pledge!`;
-  }
-
-  // Handle mailto link launch
   const handleOpenEmail = () => {
     const encodedSubject = encodeURIComponent(subject);
     const encodedBody = encodeURIComponent(body);
@@ -74,7 +57,6 @@ export default function ShareEmailDialog({
     onClose();
   };
 
-  // Handle copy link
   const handleCopyLink = async () => {
     try {
       await navigator.clipboard.writeText(shareUrl);
@@ -87,12 +69,11 @@ export default function ShareEmailDialog({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
-      <div 
+      <div
         className="w-full max-w-md overflow-hidden border rounded-xl shadow-2xl bg-cw-parchment border-cw-sand text-cw-charcoal animate-in fade-in zoom-in-95 duration-200"
         role="dialog"
         aria-modal="true"
       >
-        {/* Header */}
         <div className="flex items-center justify-between px-5 py-3.5 border-b border-cw-sand bg-cw-parchment">
           <h3 className="text-base font-bold cw-font-serif text-cw-charcoal flex items-center gap-2">
             <Mail className="w-4 h-4 text-cw-rust" />
@@ -107,7 +88,6 @@ export default function ShareEmailDialog({
           </button>
         </div>
 
-        {/* Form Body */}
         <div className="p-5 space-y-4">
           <div className="space-y-3 text-xs">
             <div>
@@ -139,7 +119,6 @@ export default function ShareEmailDialog({
             </div>
           </div>
 
-          {/* Live Preview */}
           <div className="p-3.5 rounded-lg border border-cw-sand/80 bg-white/70 space-y-1.5 text-xs">
             <div className="text-[10px] font-mono font-bold text-cw-bronze uppercase">Email Preview</div>
             <div className="font-semibold text-cw-charcoal truncate">Subject: {subject}</div>
@@ -148,7 +127,6 @@ export default function ShareEmailDialog({
             </p>
           </div>
 
-          {/* Action Buttons */}
           <div className="flex items-center gap-2 pt-1">
             <button
               onClick={handleOpenEmail}

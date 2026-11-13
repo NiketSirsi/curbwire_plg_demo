@@ -1,8 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { toast } from 'sonner';
 import { WaitlistStatus } from '@/types';
+import { getInboundReferrerId } from '@/lib/share-copy';
 import WaitlistPayoff from '@/components/WaitlistPayoff';
 
 interface UnlockFormClientProps {
@@ -11,6 +13,7 @@ interface UnlockFormClientProps {
 }
 
 export default function UnlockFormClient({ zip, cityName }: UnlockFormClientProps) {
+  const searchParams = useSearchParams();
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState<WaitlistStatus | null>(null);
@@ -32,6 +35,7 @@ export default function UnlockFormClient({ zip, cityName }: UnlockFormClientProp
           zipCode: zip,
           cardSlug: null,
           intentType: 'MARKET_UNLOCK',
+          referrerId: getInboundReferrerId(searchParams.get('ref')),
         }),
       });
 

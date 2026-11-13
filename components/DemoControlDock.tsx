@@ -2,10 +2,11 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { MapPin, Zap, ShieldCheck, RotateCcw, X, AlertTriangle } from 'lucide-react';
+import { MapPin, Zap, ShieldCheck, RotateCcw, X, AlertTriangle, Mail, UserCheck } from 'lucide-react';
 import { toast } from 'sonner';
 import { ResolvedLocation, Telemetry } from '@/types';
 import { MOCK_STAGED_CARDS } from '@/lib/mock-data';
+import { ensureUid } from '@/lib/identity';
 import VerdictModal from './VerdictModal';
 import EditorialStagingModal from './EditorialStagingModal';
 
@@ -32,6 +33,8 @@ export default function DemoControlDock({ initialLocation, initialDemo }: DemoCo
   const [isVerdictOpen, setIsVerdictOpen] = useState<boolean>(false);
   const [isStagingOpen, setIsStagingOpen] = useState<boolean>(false);
   const [isResetting, setIsResetting] = useState<boolean>(false);
+  const [isEngaged, setIsEngaged] = useState<boolean>(false);
+  const [isEngagedLoading, setIsEngagedLoading] = useState<boolean>(false);
 
   // Sync prop updates
   useEffect(() => {
@@ -89,12 +92,55 @@ export default function DemoControlDock({ initialLocation, initialDemo }: DemoCo
     }
   }, []);
 
+  const fetchEngaged = useCallback(async () => {
+    try {
+      const res = await fetch('/api/me', { cache: 'no-store' });
+      if (res.ok) {
+        const data = await res.json();
+        setIsEngaged(Boolean(data.engaged));
+      }
+    } catch {
+      // ignore
+    }
+  }, []);
+
   useEffect(() => {
     if (!isVisible) return;
     fetchTelemetry();
+    fetchEngaged();
     const interval = setInterval(fetchTelemetry, 3000);
     return () => clearInterval(interval);
-  }, [isVisible, fetchTelemetry]);
+  }, [isVisible, fetchTelemetry, fetchEngaged]);
+
+  const handleSetEngaged = async (next: boolean) => {
+    if (next === isEngaged || isEngagedLoading) return;
+    setIsEngagedLoading(true);
+    ensureUid();
+    try {
+      const res = await fetch('/api/demo/engaged', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ engaged: next }),
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setIsEngaged(Boolean(data.engaged));
+        toast.success(
+          data.engaged
+            ? 'Engaged reader ON — Vallco shows one-tap Notify (no email form).'
+            : 'Engaged reader OFF — Vallco shows cold signup banner again.'
+        );
+        await fetchTelemetry();
+        router.refresh();
+      } else {
+        toast.error(data.error || 'Could not update engaged state');
+      }
+    } catch {
+      toast.error('Network error updating engaged state');
+    } finally {
+      setIsEngagedLoading(false);
+    }
+  };
 
   // Location Switcher Handler
   const handleSwitchLocation = (zip: '95014' | '80202') => {
@@ -110,8 +156,20 @@ export default function DemoControlDock({ initialLocation, initialDemo }: DemoCo
     try {
       const res = await fetch('/api/reset', { method: 'POST' });
       if (res.ok) {
+        // Clear share-gate unlocks so Absurdity cards re-lock for the next demo
+        if (typeof window !== 'undefined') {
+          window.dispatchEvent(new Event('cw_demo_reset'));
+          const keysToRemove: string[] = [];
+          for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            if (key?.startsWith('cw_unlocked_')) keysToRemove.push(key);
+          }
+          keysToRemove.forEach((key) => localStorage.removeItem(key));
+        }
+        setIsEngaged(false);
         toast.success('Telemetry counters and test leads reset to 0');
         await fetchTelemetry();
+        await fetchEngaged();
         router.refresh();
       } else if (res.status === 403) {
         toast.error('Reset is disabled on this deploy');
@@ -197,6 +255,39 @@ export default function DemoControlDock({ initialLocation, initialDemo }: DemoCo
           </button>
         </div>
 
+        {/* Engaged reader toggle (Vallco one-tap notify) */}
+        <div className="flex items-center gap-1.5 bg-black/40 p-1 rounded-lg border border-white/5">
+          <span className="text-cw-sand/70 pl-1.5 text-[11px] flex items-center gap-1 flex-shrink-0">
+            <UserCheck className="w-3.5 h-3.5 text-cw-rust" /> Reader:
+          </span>
+          <button
+            type="button"
+            disabled={isEngagedLoading}
+            onClick={() => handleSetEngaged(false)}
+            className={`flex-1 py-1 px-2 rounded font-medium transition text-center ${
+              !isEngaged
+                ? 'bg-cw-rust text-white shadow-xs'
+                : 'text-cw-sand hover:text-white hover:bg-white/5'
+            }`}
+            title="Cold visitor — email form on Vallco"
+          >
+            Cold (not subscribed)
+          </button>
+          <button
+            type="button"
+            disabled={isEngagedLoading}
+            onClick={() => handleSetEngaged(true)}
+            className={`flex-1 py-1 px-2 rounded font-medium transition text-center ${
+              isEngaged
+                ? 'bg-cw-rust text-white shadow-xs'
+                : 'text-cw-sand hover:text-white hover:bg-white/5'
+            }`}
+            title="Seed a Cupertino brief for this browser — on-card Notify appears"
+          >
+            {isEngagedLoading ? 'Updating…' : 'Engaged (subscribed)'}
+          </button>
+        </div>
+
         {/* Live Telemetry Ticker */}
         <div className="grid grid-cols-3 gap-1.5 bg-black/30 p-2 rounded-lg border border-white/5 text-center">
           <div>
@@ -255,6 +346,27 @@ export default function DemoControlDock({ initialLocation, initialDemo }: DemoCo
           >
             <ShieldCheck className="w-3.5 h-3.5 text-cw-rust" />
             <span>Editorial Staging · {withheldCount} withheld</span>
+          </button>
+
+          {/* Recipient email preview (Loop 2 click-through) */}
+          <button
+            type="button"
+            onClick={() => {
+              if (isLocalActive) {
+                toast('Tip: switch to Remote (Denver) first', {
+                  description: 'Recipient signup then hits the waitlist payoff for a new zip.',
+                });
+              }
+              const uid = ensureUid();
+              router.push(
+                `/demo/email?slug=apple-park-horse-commute-ordinance&ref=${encodeURIComponent(uid)}&src=email`
+              );
+            }}
+            className="flex-1 min-w-[160px] flex items-center justify-center gap-1.5 py-1.5 px-2.5 rounded text-xs font-semibold bg-white/10 hover:bg-white/15 text-cw-parchment border border-white/10 transition shadow-xs"
+            title="Open mock inbox, then click through as the share recipient"
+          >
+            <Mail className="w-3.5 h-3.5 text-cw-rust" />
+            <span>Preview recipient email</span>
           </button>
 
           {/* Reset button */}

@@ -1,21 +1,29 @@
 // app/c/[slug]/page.tsx
+import { Suspense } from 'react';
 import { Metadata } from 'next';
+import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { ExternalLink, ArrowLeft } from 'lucide-react';
 import { getCardBySlug } from '@/lib/mock-data';
 import { resolveLocation, isLocalToCard } from '@/lib/location';
+import { getStore } from '@/lib/store';
 import { SITE_URL } from '@/lib/config';
 import { CardCategory } from '@/types';
 import ViewTracker from '@/components/ViewTracker';
 import ShareStrip from '@/components/ShareStrip';
 import GeoConversionBanner from '@/components/GeoConversionBanner';
+import GatedCardContent from '@/components/GatedCardContent';
 
 export const dynamic = 'force-dynamic';
 
 interface PageProps {
   params: {
     slug: string;
+  };
+  searchParams: {
+    ref?: string;
+    src?: string;
   };
 }
 
@@ -69,7 +77,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-export default function StandaloneCardPage({ params }: PageProps) {
+export default async function StandaloneCardPage({ params, searchParams }: PageProps) {
   const card = getCardBySlug(params.slug);
 
   if (!card || card.editorialStatus !== 'PUBLISHED') {
@@ -78,6 +86,12 @@ export default function StandaloneCardPage({ params }: PageProps) {
 
   const location = resolveLocation();
   const isLocal = isLocalToCard(location, card);
+  const isRecipient = Boolean(searchParams.ref?.trim());
+
+  const uid = cookies().get('cw_uid')?.value;
+  const store = getStore();
+  const knownEmail = uid ? await store.findSubscriberEmail(uid) : null;
+  const hasVerdictAlert = uid ? await store.hasVerdictAlert(uid) : false;
 
   // Helper to format detail context lead-in: ^([^.:]{1,40}):\s
   function renderDetailContext(text?: string) {
@@ -117,7 +131,9 @@ export default function StandaloneCardPage({ params }: PageProps) {
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>Issue #{6} · Cupertino ({card.zipCode})</span>
           </Link>
-          <span className="text-cw-stone">Single Card Focus</span>
+          <span className="text-cw-stone">
+            {isRecipient ? 'Shared with you' : 'Single Card Focus'}
+          </span>
         </div>
 
         {/* The Isolated Card */}
@@ -153,32 +169,48 @@ export default function StandaloneCardPage({ params }: PageProps) {
             )}
           </div>
 
-          {/* Summary */}
-          <p className="text-base sm:text-lg cw-font-body text-cw-charcoal leading-relaxed font-normal">
-            {card.summary}
-          </p>
+          {/* Body + share strip: ABSURDITY cards stay blurred until shared */}
+          <GatedCardContent card={card} isRecipient={isRecipient}>
+            <p className="text-base sm:text-lg cw-font-body text-cw-charcoal leading-relaxed font-normal">
+              {card.summary}
+            </p>
 
-          {/* Detail Context */}
-          {card.detailContext && renderDetailContext(card.detailContext)}
+            {card.detailContext && (
+              <div className="pt-2">
+                {renderDetailContext(card.detailContext)}
+              </div>
+            )}
 
-          {/* Meeting line if present */}
-          {card.actionMeta?.meetingDateDisplay && (
-            <div className="p-3 rounded-lg bg-cw-sand/20 border border-cw-sand/50 text-xs font-mono text-cw-charcoal flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-cw-rust"></span>
-              <span className="font-semibold">Meeting Schedule:</span>
-              <span>{card.actionMeta.meetingDateDisplay}</span>
+            {card.actionMeta?.meetingDateDisplay && (
+              <div className="p-3 rounded-lg bg-cw-sand/20 border border-cw-sand/50 text-xs font-mono text-cw-charcoal flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-cw-rust"></span>
+                <span className="font-semibold">Meeting Schedule:</span>
+                <span>{card.actionMeta.meetingDateDisplay}</span>
+              </div>
+            )}
+
+            <div className="pt-3 border-t border-cw-sand/60">
+              <ShareStrip
+                card={card}
+                knownEmail={knownEmail}
+                hasVerdictAlert={hasVerdictAlert}
+              />
             </div>
-          )}
-
-          {/* Share Action Strip */}
-          <div className="pt-3 border-t border-cw-sand/60">
-            <ShareStrip card={card} />
-          </div>
+          </GatedCardContent>
         </article>
 
         {/* Geo-Adaptive Conversion Banner */}
         <section className="pt-2">
-          <GeoConversionBanner location={location} card={card} isLocal={isLocal} />
+          <Suspense fallback={null}>
+            <GeoConversionBanner
+              location={location}
+              card={card}
+              isLocal={isLocal}
+              isRecipient={isRecipient}
+              knownEmail={knownEmail}
+              hasVerdictAlert={hasVerdictAlert}
+            />
+          </Suspense>
         </section>
 
         {/* Footer */}

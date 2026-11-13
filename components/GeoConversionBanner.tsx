@@ -1,10 +1,12 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { Bell, Check } from 'lucide-react';
 import { toast } from 'sonner';
 import { Card, ResolvedLocation, WaitlistStatus } from '@/types';
 import { LIVE_ZIPS } from '@/lib/config';
+import { getInboundReferrerId } from '@/lib/share-copy';
 import WaitlistPayoff from './WaitlistPayoff';
 import ShareStrip from './ShareStrip';
 
@@ -12,24 +14,38 @@ interface GeoConversionBannerProps {
   location: ResolvedLocation;
   card: Card;
   isLocal: boolean;
+  isRecipient?: boolean;
+  /** Engaged reader: email already on file for this cw_uid. */
+  knownEmail?: string | null;
+  hasVerdictAlert?: boolean;
 }
 
-export default function GeoConversionBanner({ location, card, isLocal }: GeoConversionBannerProps) {
+export default function GeoConversionBanner({
+  location,
+  card,
+  isLocal,
+  isRecipient = false,
+  knownEmail = null,
+  hasVerdictAlert = false,
+}: GeoConversionBannerProps) {
   const router = useRouter();
+  const searchParams = useSearchParams();
 
-  // Local state
   const [localEmail, setLocalEmail] = useState('');
-  const [notifyVerdict, setNotifyVerdict] = useState(true);
-  const [localSuccess, setLocalSuccess] = useState(false);
+  const [subscribedEmail, setSubscribedEmail] = useState<string | null>(null);
   const [localLoading, setLocalLoading] = useState(false);
+  const [verdictOnList, setVerdictOnList] = useState(hasVerdictAlert);
+  const [verdictLoading, setVerdictLoading] = useState(false);
 
-  // Remote state
   const [remoteZip, setRemoteZip] = useState(location.zip || '80202');
   const [remoteEmail, setRemoteEmail] = useState('');
   const [remoteWaitlist, setRemoteWaitlist] = useState<WaitlistStatus | null>(null);
   const [remoteLoading, setRemoteLoading] = useState(false);
 
-  // Local Submit Handler
+  const referrerId = getInboundReferrerId(searchParams.get('ref'));
+  const isEngaged = Boolean(knownEmail);
+  const emailForAddon = subscribedEmail || knownEmail;
+
   const handleLocalSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!localEmail || !localEmail.includes('@')) {
@@ -39,7 +55,6 @@ export default function GeoConversionBanner({ location, card, isLocal }: GeoConv
 
     setLocalLoading(true);
     try {
-      const intentType = notifyVerdict && card.actionType === 'VERDICT_TRACK' ? 'VERDICT_ALERT' : 'GENERAL_BRIEF';
       const res = await fetch('/api/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -47,14 +62,21 @@ export default function GeoConversionBanner({ location, card, isLocal }: GeoConv
           email: localEmail,
           zipCode: card.zipCode,
           cardSlug: card.slug,
-          intentType,
+          intentType: 'GENERAL_BRIEF',
+          referrerId,
         }),
       });
 
       const data = await res.json();
       if (res.ok && data.success) {
-        setLocalSuccess(true);
-        toast.success(data.alreadySubscribed ? 'Welcome back! Your preferences are updated.' : 'Subscribed to the Cupertino civic brief!');
+        setSubscribedEmail(localEmail.trim().toLowerCase());
+        toast.success(
+          data.alreadySubscribed
+            ? 'Welcome back! Your preferences are updated.'
+            : 'Subscribed to the Cupertino civic brief!'
+        );
+        // Refresh so on-card Notify appears for engaged readers
+        router.refresh();
       } else {
         toast.error(data.error || 'Failed to subscribe');
       }
@@ -65,7 +87,41 @@ export default function GeoConversionBanner({ location, card, isLocal }: GeoConv
     }
   };
 
-  // Remote Submit Handler
+  const handleVerdictAddon = async () => {
+    if (!emailForAddon || verdictOnList || verdictLoading) return;
+
+    setVerdictLoading(true);
+    try {
+      const res = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: emailForAddon,
+          zipCode: card.zipCode,
+          cardSlug: card.slug,
+          intentType: 'VERDICT_ALERT',
+          referrerId,
+        }),
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setVerdictOnList(true);
+        toast.success(
+          data.alreadySubscribed
+            ? "You're already on the verdict list."
+            : "You're on the list — we'll notify you when the Commission decides."
+        );
+        router.refresh();
+      } else {
+        toast.error(data.error || 'Could not enable verdict alerts');
+      }
+    } catch {
+      toast.error('Network error enabling verdict alerts');
+    } finally {
+      setVerdictLoading(false);
+    }
+  };
+
   const handleRemoteSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const cleanZip = remoteZip.trim();
@@ -80,7 +136,6 @@ export default function GeoConversionBanner({ location, card, isLocal }: GeoConv
       return;
     }
 
-    // Check if zip is already live
     if (LIVE_ZIPS.includes(cleanZip)) {
       toast('Curbwire is already live in this zip! Redirecting...');
       router.push(`/${cleanZip}`);
@@ -97,6 +152,7 @@ export default function GeoConversionBanner({ location, card, isLocal }: GeoConv
           zipCode: cleanZip,
           cardSlug: card.slug,
           intentType: 'MARKET_UNLOCK',
+          referrerId,
         }),
       });
 
@@ -122,21 +178,51 @@ export default function GeoConversionBanner({ location, card, isLocal }: GeoConv
     }
   };
 
-  // CASE A: LOCAL (Cupertino)
+  const recipientLead = (
+    <p className="text-sm cw-font-body text-cw-charcoal font-medium leading-snug">
+      Get your own local Curbwire Newsletter by signing up here.
+    </p>
+  );
+
+  const verdictAddon = card.actionType === 'VERDICT_TRACK' && emailForAddon && (
+    <div className="pt-2 border-t border-cw-sand/60 space-y-2">
+      {verdictOnList ? (
+        <p className="text-xs font-mono text-cw-badge-coordination flex items-center gap-1.5">
+          <Check className="w-3.5 h-3.5" />
+          You&apos;re on the list for this hearing&apos;s verdict.
+        </p>
+      ) : (
+        <button
+          type="button"
+          onClick={handleVerdictAddon}
+          disabled={verdictLoading}
+          className="inline-flex items-center gap-1.5 px-3 py-2 rounded-md bg-white border border-cw-sand text-cw-charcoal text-xs font-mono font-medium hover:bg-cw-sand/20 transition disabled:opacity-60"
+        >
+          <Bell className="w-3.5 h-3.5 text-cw-rust" />
+          <span>
+            {verdictLoading ? 'Saving…' : 'Also notify me about this hearing'}
+          </span>
+        </button>
+      )}
+    </div>
+  );
+
   if (isLocal) {
-    if (localSuccess) {
+    // Engaged: no email form; verdict is on-card only
+    if (isEngaged && !subscribedEmail) {
       return (
-        <div className="p-5 sm:p-6 rounded-xl border border-cw-badge-coordination/40 bg-white shadow-sm space-y-4 animate-in fade-in duration-300">
+        <div className="p-5 sm:p-6 rounded-xl border border-cw-badge-coordination/40 bg-white shadow-sm space-y-4">
           <div className="space-y-1">
             <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-mono font-semibold bg-cw-badge-coordination/15 text-cw-badge-coordination">
               ✓ Subscribed
             </span>
             <h3 className="text-base font-bold cw-font-serif text-cw-charcoal pt-1">
-              You're set for the Cupertino 2-minute calm civic briefing.
+              You&apos;re subscribed to the Cupertino brief.
             </h3>
-            {notifyVerdict && card.actionType === 'VERDICT_TRACK' && (
+            {card.actionType === 'VERDICT_TRACK' && (
               <p className="text-xs cw-font-body text-cw-bronze">
-                We'll email you immediately after the Planning Commission vote on this parcel.
+                Use <span className="font-medium text-cw-charcoal">Notify me of the verdict</span> on
+                the card above for a one-tap alert on this hearing.
               </p>
             )}
           </div>
@@ -145,41 +231,69 @@ export default function GeoConversionBanner({ location, card, isLocal }: GeoConv
             <span className="text-xs font-semibold cw-font-serif text-cw-charcoal block">
               Know a neighbor who should see this parcel?
             </span>
+            {/* Notify stays on the card only — do not duplicate it in this share nudge */}
             <ShareStrip card={card} />
           </div>
         </div>
       );
     }
 
+    // Just signed up this session (cold or recipient) → success + optional verdict add-on
+    if (subscribedEmail) {
+      return (
+        <div className="p-5 sm:p-6 rounded-xl border border-cw-badge-coordination/40 bg-white shadow-sm space-y-4 animate-in fade-in duration-300">
+          <div className="space-y-1">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-mono font-semibold bg-cw-badge-coordination/15 text-cw-badge-coordination">
+              ✓ Subscribed
+            </span>
+            <h3 className="text-base font-bold cw-font-serif text-cw-charcoal pt-1">
+              You&apos;re set for the Cupertino 2-minute calm civic briefing.
+            </h3>
+          </div>
+
+          {verdictAddon}
+
+          <div className="pt-2 border-t border-cw-sand/60 space-y-2">
+            <span className="text-xs font-semibold cw-font-serif text-cw-charcoal block">
+              Know a neighbor who should see this parcel?
+            </span>
+            <ShareStrip
+              card={card}
+              knownEmail={subscribedEmail}
+              hasVerdictAlert={verdictOnList}
+            />
+          </div>
+        </div>
+      );
+    }
+
+    // Cold local or recipient: email first (no notify checkbox)
     return (
       <div className="p-5 sm:p-6 rounded-xl border border-cw-sand bg-white shadow-sm space-y-4 text-cw-charcoal">
         <div className="space-y-1">
           <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-cw-rust">
-            Civic Coordination · Local Briefing
+            {isRecipient ? 'Shared with you · Local signup' : 'Civic Coordination · Local Briefing'}
           </span>
-          <h3 className="text-base sm:text-lg font-bold cw-font-serif text-cw-charcoal leading-snug">
-            Live in Cupertino? Get the 2-minute calm civic briefing.
-          </h3>
-          <p className="text-xs cw-font-body text-cw-stone">
-            Zero noise, no outrage threads, just essential local decisions before they happen.
-          </p>
+          {isRecipient ? (
+            <>
+              {recipientLead}
+              <h3 className="text-base sm:text-lg font-bold cw-font-serif text-cw-charcoal leading-snug">
+                Live in Cupertino? Get the 2-minute calm civic briefing.
+              </h3>
+            </>
+          ) : (
+            <>
+              <h3 className="text-base sm:text-lg font-bold cw-font-serif text-cw-charcoal leading-snug">
+                Live in Cupertino? Get the 2-minute calm civic briefing.
+              </h3>
+              <p className="text-xs cw-font-body text-cw-stone">
+                Zero noise, no outrage threads, just essential local decisions before they happen.
+              </p>
+            </>
+          )}
         </div>
 
         <form onSubmit={handleLocalSubmit} className="space-y-3 pt-1">
-          {card.actionType === 'VERDICT_TRACK' && (
-            <label className="flex items-start gap-2.5 text-xs cw-font-body text-cw-charcoal cursor-pointer select-none">
-              <input
-                type="checkbox"
-                checked={notifyVerdict}
-                onChange={(e) => setNotifyVerdict(e.target.checked)}
-                className="mt-0.5 h-4 w-4 rounded border-cw-sand text-cw-rust focus:ring-cw-rust accent-cw-rust"
-              />
-              <span>
-                Notify me when the Planning Commission issues a decision on this parcel.
-              </span>
-            </label>
-          )}
-
           <div className="flex flex-col sm:flex-row gap-2">
             <input
               type="email"
@@ -202,7 +316,6 @@ export default function GeoConversionBanner({ location, card, isLocal }: GeoConv
     );
   }
 
-  // CASE B: REMOTE (e.g. Denver 80202)
   if (remoteWaitlist) {
     return <WaitlistPayoff status={remoteWaitlist} />;
   }
@@ -216,8 +329,9 @@ export default function GeoConversionBanner({ location, card, isLocal }: GeoConv
     <div className="p-5 sm:p-6 rounded-xl border border-cw-sand bg-white shadow-sm space-y-4 text-cw-charcoal">
       <div className="space-y-1">
         <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-cw-rust">
-          Inter-Community Expansion · Unlock Request
+          {isRecipient ? 'Shared with you · Unlock your city' : 'Inter-Community Expansion · Unlock Request'}
         </span>
+        {isRecipient && recipientLead}
         <h3 className="text-base sm:text-lg font-bold cw-font-serif text-cw-charcoal leading-snug">
           {remoteHeader}
         </h3>

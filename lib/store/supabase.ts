@@ -141,6 +141,42 @@ export class SupabaseStore implements EventStore {
     return data ? data.email : null;
   }
 
+  async findSubscriberEmail(userRefId: string): Promise<string | null> {
+    if (!userRefId) return null;
+    const { data, error } = await this.client
+      .from('subscribers')
+      .select('email')
+      .eq('user_ref_id', userRefId)
+      .order('created_at', { ascending: true })
+      .limit(1)
+      .maybeSingle();
+
+    if (error) throw error;
+    return data ? data.email : null;
+  }
+
+  async hasVerdictAlert(userRefId: string): Promise<boolean> {
+    if (!userRefId) return false;
+    const { count, error } = await this.client
+      .from('subscribers')
+      .select('id', { count: 'exact', head: true })
+      .eq('user_ref_id', userRefId)
+      .eq('intent_type', 'VERDICT_ALERT');
+    if (error) throw error;
+    return (count ?? 0) > 0;
+  }
+
+  async removeSubscribersForUser(userRefId: string): Promise<number> {
+    if (!userRefId) return 0;
+    const { data, error } = await this.client
+      .from('subscribers')
+      .delete()
+      .eq('user_ref_id', userRefId)
+      .select('id');
+    if (error) throw error;
+    return data?.length ?? 0;
+  }
+
   async getTelemetry(): Promise<Telemetry> {
     const [sharesRes, viewsRes, subsRes, verdictRes, unlockRes] = await Promise.all([
       this.client.from('share_events').select('id', { count: 'exact', head: true }),

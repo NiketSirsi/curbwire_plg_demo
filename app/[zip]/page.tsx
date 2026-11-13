@@ -1,13 +1,16 @@
 // app/[zip]/page.tsx
 import { notFound, redirect } from 'next/navigation';
+import { cookies } from 'next/headers';
 import Link from 'next/link';
 import { getMockIssue, getMockCards } from '@/lib/mock-data';
 import { resolveLocation } from '@/lib/location';
+import { getStore } from '@/lib/store';
 import { LIVE_ZIPS } from '@/lib/config';
 import { CardCategory } from '@/types';
 import ViewTracker from '@/components/ViewTracker';
 import ShareButton from '@/components/ShareButton';
 import ShareStrip from '@/components/ShareStrip';
+import GatedCardContent from '@/components/GatedCardContent';
 
 export const dynamic = 'force-dynamic';
 
@@ -31,7 +34,7 @@ const CATEGORY_BADGE_COLORS: Record<CardCategory, string> = {
   LOCAL_NEWS: 'bg-cw-badge-news',
 };
 
-export default function NewsletterIssuePage({ params }: PageProps) {
+export default async function NewsletterIssuePage({ params }: PageProps) {
   const { zip } = params;
 
   if (!/^\d{5}$/.test(zip)) {
@@ -46,6 +49,11 @@ export default function NewsletterIssuePage({ params }: PageProps) {
   const location = resolveLocation();
   const issue = getMockIssue();
   const cards = getMockCards();
+
+  const uid = cookies().get('cw_uid')?.value;
+  const store = getStore();
+  const knownEmail = uid ? await store.findSubscriberEmail(uid) : null;
+  const hasVerdictAlert = uid ? await store.hasVerdictAlert(uid) : false;
 
   // Helper to format detail context lead-in: ^([^.:]{1,40}):\s
   function renderDetailContext(text?: string) {
@@ -149,26 +157,33 @@ export default function NewsletterIssuePage({ params }: PageProps) {
                   )}
                 </div>
 
-                {/* Summary */}
-                <p className="text-sm sm:text-base cw-font-body text-cw-charcoal leading-relaxed">
-                  {card.summary}
-                </p>
+                {/* Body + share strip: ABSURDITY cards stay blurred until shared */}
+                <GatedCardContent card={card}>
+                  <p className="text-sm sm:text-base cw-font-body text-cw-charcoal leading-relaxed">
+                    {card.summary}
+                  </p>
 
-                {/* Detail Context */}
-                {card.detailContext && renderDetailContext(card.detailContext)}
+                  {card.detailContext && (
+                    <div className="pt-2">
+                      {renderDetailContext(card.detailContext)}
+                    </div>
+                  )}
 
-                {/* Meeting Line */}
-                {card.actionMeta?.meetingDateDisplay && (
-                  <div className="text-xs font-mono font-medium text-cw-charcoal flex items-center gap-1.5 pt-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-cw-rust"></span>
-                    <span>{card.actionMeta.meetingDateDisplay}</span>
+                  {card.actionMeta?.meetingDateDisplay && (
+                    <div className="text-xs font-mono font-medium text-cw-charcoal flex items-center gap-1.5 pt-1">
+                      <span className="w-1.5 h-1.5 rounded-full bg-cw-rust"></span>
+                      <span>{card.actionMeta.meetingDateDisplay}</span>
+                    </div>
+                  )}
+
+                  <div className="pt-2 border-t border-cw-sand/50">
+                    <ShareStrip
+                      card={card}
+                      knownEmail={knownEmail}
+                      hasVerdictAlert={hasVerdictAlert}
+                    />
                   </div>
-                )}
-
-                {/* Share Action Strip */}
-                <div className="pt-2 border-t border-cw-sand/50">
-                  <ShareStrip card={card} />
-                </div>
+                </GatedCardContent>
               </article>
             );
           })}

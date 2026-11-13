@@ -10,9 +10,10 @@ interface ShareButtonProps {
   target: ShareTarget;
   className?: string;
   children?: React.ReactNode;
+  onShareSuccess?: () => void;
 }
 
-export default function ShareButton({ target, className, children }: ShareButtonProps) {
+export default function ShareButton({ target, className, children, onShareSuccess }: ShareButtonProps) {
   const [isEmailOpen, setIsEmailOpen] = useState(false);
   const [computedUrl, setComputedUrl] = useState('');
 
@@ -27,6 +28,13 @@ export default function ShareButton({ target, className, children }: ShareButton
         referrerId: uid,
       }),
     }).catch(() => {});
+
+    onShareSuccess?.();
+    if (target.cardSlug && typeof window !== 'undefined') {
+      window.dispatchEvent(
+        new CustomEvent('cw_card_unlocked', { detail: { slug: target.cardSlug } })
+      );
+    }
   };
 
   const handleShareClick = async (e: React.MouseEvent) => {

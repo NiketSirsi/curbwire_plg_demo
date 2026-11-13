@@ -19,6 +19,12 @@ export interface EventStore {
   marketUnlockRank(zip: string, email: string): Promise<number>;
   countReferredSignups(zip: string, referrerId: string): Promise<number>;
   findMarketUnlockEmail(zip: string, userRefId: string): Promise<string | null>;
+  /** Earliest subscriber email for this cw_uid (any intent), or null. */
+  findSubscriberEmail(userRefId: string): Promise<string | null>;
+  /** True if this cw_uid already has a VERDICT_ALERT row. */
+  hasVerdictAlert(userRefId: string): Promise<boolean>;
+  /** Demo helper: delete all subscriber rows for this cw_uid. */
+  removeSubscribersForUser(userRefId: string): Promise<number>;
   getTelemetry(): Promise<Telemetry>;
   reset(): Promise<void>;
 }

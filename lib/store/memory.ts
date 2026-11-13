@@ -115,6 +115,26 @@ class MemoryStore implements EventStore {
     return found ? found.email : null;
   }
 
+  async findSubscriberEmail(userRefId: string): Promise<string | null> {
+    if (!userRefId) return null;
+    const found = this.subscribers
+      .filter((s) => s.userRefId === userRefId)
+      .sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime())[0];
+    return found ? found.email : null;
+  }
+
+  async hasVerdictAlert(userRefId: string): Promise<boolean> {
+    if (!userRefId) return false;
+    return this.subscribers.some((s) => s.userRefId === userRefId && s.intentType === 'VERDICT_ALERT');
+  }
+
+  async removeSubscribersForUser(userRefId: string): Promise<number> {
+    if (!userRefId) return 0;
+    const before = this.subscribers.length;
+    this.subscribers = this.subscribers.filter((s) => s.userRefId !== userRefId);
+    return before - this.subscribers.length;
+  }
+
   async getTelemetry(): Promise<Telemetry> {
     const verdictAlertLeads = this.subscribers.filter((s) => s.intentType === 'VERDICT_ALERT').length;
     const marketUnlockLeads = this.subscribers.filter((s) => s.intentType === 'MARKET_UNLOCK').length;

@@ -1,4 +1,5 @@
 // app/unlock/[zip]/page.tsx
+import { Suspense } from 'react';
 import { notFound, redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
 import Link from 'next/link';
@@ -108,7 +109,9 @@ export default async function RemoteUnlockPage({ params }: PageProps) {
             </div>
 
             {/* Client Form */}
-            <UnlockFormClient zip={zip} cityName={cityName} />
+            <Suspense fallback={null}>
+              <UnlockFormClient zip={zip} cityName={cityName} />
+            </Suspense>
           </div>
         )}
 
