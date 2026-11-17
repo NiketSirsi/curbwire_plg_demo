@@ -1,8 +1,8 @@
 Delivered-To: nsirsi@gmail.com
 Received: by 2002:a05:6359:22a:b0:2c6:da94:2c75 with SMTP id ej42csp1209330rwb;
-        Tue, 10 Nov 2026 07:31:32 -0800 (PST)
+        Tue, 17 Nov 2026 07:31:32 -0800 (PST)
 X-Received: by 2002:a05:690c:388:b0:8b0:e6ed:ae52 with SMTP id 00721157ae682-8b392acfa78mr13528487b3.47.1794324691711;
-        Tue, 10 Nov 2026 07:31:31 -0800 (PST)
+        Tue, 17 Nov 2026 07:31:31 -0800 (PST)
 ARC-Seal: i=1; a=rsa-sha256; t=1794324691; cv=none;
         d=google.com; s=arc-20260327;
         b=pWjRPHOOMGozwtpd4IxUpiX06QPmotWSuT1bKoBLtAugx3OtIzoy66pO0aCOmc1Dsu
@@ -31,10 +31,10 @@ ARC-Authentication-Results: i=1; mx.google.com;
        dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=send.curbwire.com
 Return-Path: <010001a1c615f863-6a7b0be5-8e66-4b90-8309-feb991804c11-000000@send.send.curbwire.com>
 Received: from a9-20.smtp-out.amazonses.com (a9-20.smtp-out.amazonses.com. [54.240.9.20])
-        by mx.google.com with ESMTPS id 6a1803df08f44-91ef095b83esi34017006d6.622.2026.11.10.07.31.31
+        by mx.google.com with ESMTPS id 6a1803df08f44-91ef095b83esi34017006d6.622.2026.11.17.07.31.31
         for <nsirsi@gmail.com>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 10 Nov 2026 07:31:31 -0800 (PST)
+        Tue, 17 Nov 2026 07:31:31 -0800 (PST)
 Received-SPF: pass (google.com: domain of 010001a1c615f863-6a7b0be5-8e66-4b90-8309-feb991804c11-000000@send.send.curbwire.com designates 54.240.9.20 as permitted sender) client-ip=54.240.9.20;
 Authentication-Results: mx.google.com;
        dkim=pass header.i=@send.curbwire.com header.s=resend header.b=j64uXlA0;
@@ -61,14 +61,14 @@ List-Unsubscribe-Post: List-Unsubscribe=One-Click
 From: Curbwire <hello@send.curbwire.com>
 To: nsirsi@gmail.com
 Reply-To: people@curbwire.com
-Subject: =?UTF-8?Q?Cupertino_=C2=B7_Tue=2C_Nov_10?=
+Subject: =?UTF-8?Q?Cupertino_=C2=B7_Tue=2C_Nov_17?=
 Message-ID: <010001a1c615f863-6a7b0be5-8e66-4b90-8309-feb991804c11-000000@email.amazonses.com>
-Date: Tue, 10 Nov 2026 15:31:31 +0000
+Date: Tue, 17 Nov 2026 15:31:31 +0000
 MIME-Version: 1.0
 Content-Type: multipart/alternative;
  boundary="--_NmP-58ff7c030b133459-Part_1"
 Feedback-ID: :1.us-east-1.CeRW6b8Mw1HiCP7zgrytfznTaEygo2Ws2zWYErAv+gPvM2NbweyHEVsyCBSHaKbDyxKqBufTkB89xPH/0WXt2WWB/YCuhzjPJYA/+zRF2AxWhBZgFwLiwyzLDlI0V7pTGQ30y2tYcKPaOkrB5Pr1A0oho1tw++R2myfx0OPeJX8=:1.us-east-1.epbACCJLarUaEI78XZoGREJ9LamRjxMH5pM2kZb64rA=:AmazonSES
-X-SES-Outgoing: 2026.11.10-54.240.9.20
+X-SES-Outgoing: 2026.11.17-54.240.9.20
 
 ----_NmP-58ff7c030b133459-Part_1
 Content-Type: text/plain; charset=utf-8
@@ -83,7 +83,7 @@ Hi, 95014.
 
       Read Online
 Curbwire N&ordm;6
-Tue, Nov 10
+Tue, Nov 17
 
 
 
@@ -130,12 +130,12 @@ identified the toddler on Monday. Investigators developed probable cause to=
  arrest Su but have not determined all the circumstances surrounding the =
 crash.
 
-KTVU FOX 2, Nov 9 &middot; Forward
+KTVU FOX 2, Nov 16 &middot; Forward
 
 Update: Tang, Fruen and =
 Lindskog win Cupertino=E2=80=99s three council seats
 
-Decision Desk HQ=E2=80=99s Nov. 9 tally lists John Tang, J.R. Fruen and =
+Decision Desk HQ=E2=80=99s Nov. 16 tally lists John Tang, J.R. Fruen and =
 Seema Lindskog as the winners of the three at-large Cupertino City Council =
 seats.
 
@@ -145,7 +145,7 @@ counts had them leading. San Jos=C3=A9 Spotlight reports that seating the =
 three Cupertino Together candidates would swing the council majority from =
 preservationist to pro-growth for four years.
 
-Decision Desk HQ, Nov 9 =
+Decision Desk HQ, Nov 16 =
 &middot; Forward
 
 Japan=E2=80=99s biggest curry chain CoCo Ichibanya plans =
@@ -161,7 +161,7 @@ Zoom in: The roughly 50-seat spot is at 19900 Vallco Pkwy., Suite 100, with=
 spinach and cheese. At Southern California locations, a classic chicken =
 cutlet curry goes for $15.85.
 
-SF Chronicle via Yahoo, Nov 8 &middot; =
+SF Chronicle via Yahoo, Nov 15 &middot; =
 Forward
 
 California=E2=80=99s Great America announces 2027 will be its =
@@ -174,7 +174,7 @@ Why it matters: Park officials say the land lease expires in June 2028 and =
 will not be renewed. The Farewell Season opens in March 2027 and ends on =
 Labor Day 2027, with operating days and hours to be announced later.
 
-KRON4, Nov 6 &middot; Forward
+KRON4, Nov 13 &middot; Forward
 
 Santa Clara man tied to school shooting =
 plans accused of lying to buy guns
@@ -190,7 +190,7 @@ according to the U.S. Attorney=E2=80=99s Office for Northern California. If=
  convicted, he faces up to 10 years in prison and a $250,000 fine for each =
 violation of federal law.
 
-Local News Matters, Nov 7 &middot; Forward
+Local News Matters, Nov 14 &middot; Forward
 
 Quick Hits
 
@@ -205,7 +205,7 @@ commercial burglaries and about 50 vehicle break-ins.
 
 
 
-Events: Nov 10th=E2=80=9312th
+Events: Nov 17th=E2=80=9319th
 
 Around Town
 Cupertino Veterans Day Ceremony
@@ -233,7 +233,7 @@ show about a Silicon Valley law firm, is shot in New Jersey.
 Nicely done, California!&rdquo;
 
           &mdash; @joseph_meyer on X =
-&middot; Nov 10
+&middot; Nov 17
 
         Joseph Meyer notes Paramount's Silicon Valley =
 series named Cupertino is shooting out of state.
@@ -249,7 +249,7 @@ housing prices falling to 2019 dollar levels until I pulled up San Jose, CA=
  and the first two properties we found that are listed and were also sold =
 in 2019 were actually lower than 2019 prices.&rdquo;
 
-          &mdash; @BryIsTheGuy on X &middot; Nov 10
+          &mdash; @BryIsTheGuy on X &middot; Nov 17
 
         A buyer says a realtor doubted falling prices until they compared =
 current San Jose homes to 2019 sales.
@@ -276,9 +276,9 @@ party over the Sierra and later settled near the creek.
 
 
 
-          &larr;Nov 6
+          &larr;Nov 13
 
-            Nov 10, 2026
+            Nov 17, 2026
 
 
           See all&rarr;
@@ -497,7 +497,7 @@ an',serif;font-size:18px;line-height:1.55;color:#191713;"><a href=3D"https:=
 90-8309-feb991804c11-000000/MHMlEzxIKrfggcnnq5lCmIaZRjaMN-8QCZ-5fesRea8=3D4=
 52" style=3D"font-family:'JetBrains Mono','SFMono-Regular',Menlo,Consolas,m=
 onospace;font-size:15px;color:#a83a25;text-decoration:underline;text-underl=
-ine-offset:2px;">KTVU FOX 2, Nov 9</a><span style=3D"font-family:'JetBrains=
+ine-offset:2px;">KTVU FOX 2, Nov 16</a><span style=3D"font-family:'JetBrains=
  Mono','SFMono-Regular',Menlo,Consolas,monospace;font-size:15px;color:#a83a=
 25;color:#6B6B66;"> &middot; </span><a href=3D"mailto:?subject=3DCurbwire%3=
 A%20Driver%20named%20in%20fatal%20crash%20near%20Apple%20Park%20that%20kill=
@@ -525,7 +525,7 @@ rline-offset:5px;">Update: Tang, Fruen and Lindskog win Cupertino=E2=80=99s=
 </h2>
 <p style=3D"margin:0;font-family:'Spectral',Georgia,'Times New Roman',serif=
 ;font-size:18px;line-height:1.55;color:#191713;">Decision Desk HQ=E2=80=99s=
- Nov. 9 tally lists <strong>John Tang</strong>, J.R. Fruen and Seema Lindsk=
+ Nov. 16 tally lists <strong>John Tang</strong>, J.R. Fruen and Seema Lindsk=
 og as the winners of the three at-large Cupertino City Council seats.</p>
 <p style=3D"margin:12px 0 0 0;font-family:'Spectral',Georgia,'Times New Rom=
 an',serif;font-size:18px;line-height:1.55;color:#191713;"><strong>What chan=
@@ -541,7 +541,7 @@ F2026-11-03%2Fcalifornia-cupertino-city-council-at-large-general-election/1=
 /010001a1c615f863-6a7b0be5-8e66-4b90-8309-feb991804c11-000000/Zl30LUtHTAnYL=
 W7EvI6vZAJGjgOc7_8QYCgte6RbGas=3D452" style=3D"font-family:'JetBrains Mono'=
 ,'SFMono-Regular',Menlo,Consolas,monospace;font-size:15px;color:#a83a25;tex=
-t-decoration:underline;text-underline-offset:2px;">Decision Desk HQ, Nov 9<=
+t-decoration:underline;text-underline-offset:2px;">Decision Desk HQ, Nov 16<=
 /a><span style=3D"font-family:'JetBrains Mono','SFMono-Regular',Menlo,Conso=
 las,monospace;font-size:15px;color:#a83a25;color:#6B6B66;"> &middot; </span=
 ><a href=3D"mailto:?subject=3DCurbwire%3A%20Update%3A%20Tang%2C%20Fruen%20a=
@@ -595,7 +595,7 @@ es%2Fjapans-biggest-curry-chain-opening-130000367.html/1/010001a1c615f863-6=
 a7b0be5-8e66-4b90-8309-feb991804c11-000000/7Kegr6ZHea1G--Ii75jftZhJujYzroBH=
 _1qual2ydj8=3D452" style=3D"font-family:'JetBrains Mono','SFMono-Regular',M=
 enlo,Consolas,monospace;font-size:15px;color:#a83a25;text-decoration:underl=
-ine;text-underline-offset:2px;">SF Chronicle via Yahoo, Nov 8</a><span styl=
+ine;text-underline-offset:2px;">SF Chronicle via Yahoo, Nov 15</a><span styl=
 e=3D"font-family:'JetBrains Mono','SFMono-Regular',Menlo,Consolas,monospace=
 ;font-size:15px;color:#a83a25;color:#6B6B66;"> &middot; </span><a href=3D"m=
 ailto:?subject=3DCurbwire%3A%20Japan%E2%80%99s%20biggest%20curry%20chain%20=
@@ -683,7 +683,7 @@ F07%2Fsanta-clara-man-tied-to-school-shooting-plans-accused-of-lying-to-get=
 EXQ-pbLR7ZMHLRok4rZNr2mGSpEwG10xbT_wE=3D452" style=3D"font-family:'JetBrain=
 s Mono','SFMono-Regular',Menlo,Consolas,monospace;font-size:15px;color:#a83=
 a25;text-decoration:underline;text-underline-offset:2px;">Local News Matter=
-s, Nov 7</a><span style=3D"font-family:'JetBrains Mono','SFMono-Regular',Me=
+s, Nov 14</a><span style=3D"font-family:'JetBrains Mono','SFMono-Regular',Me=
 nlo,Consolas,monospace;font-size:15px;color:#a83a25;color:#6B6B66;"> &middo=
 t; </span><a href=3D"mailto:?subject=3DCurbwire%3A%20Santa%20Clara%20man%20=
 tied%20to%20school%20shooting%20plans%20accused%20of%20lying%20to%20buy%20g=
@@ -735,7 +735,7 @@ ding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
 <div data-cw-header=3D"1" style=3D"font-family:'Playfair Display','DM Serif=
  Display',Georgia,'Times New Roman',serif;font-style:italic;font-weight:400=
 ;font-size:34px;line-height:1.2;color:#191713;margin:0 0 16px 0;">Events: N=
-ov 10th=E2=80=9312th</div>
+ov 17th=E2=80=9319th</div>
 <div style=3D"border-left:3px solid #3d6b4f;padding:0 0 0 16px;margin:0 0 2=
 8px 0;"><div style=3D"font-family:'JetBrains Mono','SFMono-Regular',Menlo,C=
 onsolas,monospace;font-size:13px;letter-spacing:0.14em;text-transform:upper=
@@ -810,7 +810,7 @@ bwire.com/CL0/https:%2F%2Fx.com%2Fjoseph_meyer%2Fstatus%2F21199792071407618=
 13/1/010001a1c615f863-6a7b0be5-8e66-4b90-8309-feb991804c11-000000/6Sqdqfb4q=
 Cg1iJasYedDZd7aDtdeqlUS7DhwJbyR20A=3D452" style=3D"color:#a83a25;text-decor=
 ation:underline;text-underline-offset:2px;">@joseph_meyer</a> on <span styl=
-e=3D"color:#6B6B66;">X</span> &middot; Nov 10</p>
+e=3D"color:#6B6B66;">X</span> &middot; Nov 17</p>
         <p style=3D"font-family: 'Spectral',Georgia,'Times New Roman',serif=
 ; font-size: 18px; line-height: 1.55; color: #191713; margin:0;">Joseph Mey=
 er notes Paramount&#39;s Silicon Valley series named Cupertino is shooting =
@@ -835,7 +835,7 @@ bwire.com/CL0/https:%2F%2Fx.com%2FBryIsTheGuy%2Fstatus%2F211995526551268586=
 0/1/010001a1c615f863-6a7b0be5-8e66-4b90-8309-feb991804c11-000000/lvnLPj6ty7=
 WtB1ng3IOmFJnQEwsysWFG1jYgL2FBV9o=3D452" style=3D"color:#a83a25;text-decora=
 tion:underline;text-underline-offset:2px;">@BryIsTheGuy</a> on <span style=
-=3D"color:#6B6B66;">X</span> &middot; Nov 10</p>
+=3D"color:#6B6B66;">X</span> &middot; Nov 17</p>
         <p style=3D"font-family: 'Spectral',Georgia,'Times New Roman',serif=
 ; font-size: 18px; line-height: 1.55; color: #191713; margin:0;">A buyer sa=
 ys a realtor doubted falling prices until they compared current San Jose ho=
@@ -880,13 +880,13 @@ acing:0.12em;text-transform:uppercase;line-height:2;color:#5a5347;width:30%=
 1/010001a1c615f863-6a7b0be5-8e66-4b90-8309-feb991804c11-000000/m29YRWAUVmwj=
 BuZuOOigYvvxO873X3_8Fkw37vJzSec=3D452" style=3D"color:#a83a25;text-decorati=
 on:none;">&larr;<span style=3D"padding-left:4px;text-decoration:underline;t=
-ext-underline-offset:3px;">Nov 6</span></a></td>
+ext-underline-offset:3px;">Nov 13</span></a></td>
           <td width=3D"40%" align=3D"center" valign=3D"middle" style=3D"wid=
 th:40%;text-align:center;vertical-align:middle;padding:12px 12px;white-spac=
 e:nowrap;">
             <div style=3D"font-family:'Playfair Display','DM Serif Display'=
 ,Georgia,'Times New Roman',serif;font-style:italic;font-size:18px;color:#19=
-1713;">Nov 10, 2026</div>
+1713;">Nov 17, 2026</div>
           </td>
           <td width=3D"30%" align=3D"right" valign=3D"middle" style=3D"font=
 -family:'JetBrains Mono','SFMono-Regular',Menlo,Consolas,monospace;font-siz=

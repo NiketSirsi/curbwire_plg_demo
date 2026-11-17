@@ -2,6 +2,7 @@
 
 import React, { useEffect } from 'react';
 import { X, Zap, Bell } from 'lucide-react';
+import { formatPacific, getUpcomingPacificDate } from '@/lib/dates';
 
 interface VerdictModalProps {
   isOpen: boolean;
@@ -20,6 +21,10 @@ export default function VerdictModal({ isOpen, onClose }: VerdictModalProps) {
   }, [isOpen, onClose]);
 
   if (!isOpen) return null;
+
+  // Client-only (modal closed returns null above): Saturday ~48h after this week's Thursday hearing.
+  const alertAt = getUpcomingPacificDate(6, 9, 14);
+  const alertDateDisplay = `${formatPacific(alertAt, { month: 'short', day: 'numeric', year: 'numeric' })} · ${formatPacific(alertAt, { hour: 'numeric', minute: '2-digit' })}`;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
@@ -64,7 +69,7 @@ export default function VerdictModal({ isOpen, onClose }: VerdictModalProps) {
               <span className="flex items-center gap-1.5 font-semibold text-cw-charcoal">
                 <Bell className="w-3.5 h-3.5 text-cw-rust" /> Curbwire Civic Alert · 95014
               </span>
-              <span>Nov 21, 2026 · 9:14 AM</span>
+              <span>{alertDateDisplay}</span>
             </div>
 
             <div className="space-y-2">
